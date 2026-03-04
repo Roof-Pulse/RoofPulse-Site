@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>RoofPulse</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#0b0b0b;
+color:white;
+}
+
+section{
+padding:90px 10%;
+text-align:center;
+}
+
+h1{
+font-size:52px;
+}
+
+h2{
+font-size:36px;
+}
+
+p{
+font-size:18px;
+max-width:750px;
+margin:auto;
+}
+
+button{
+background:#c50000;
+border:none;
+padding:16px 32px;
+color:white;
+font-size:18px;
+border-radius:8px;
+cursor:pointer;
+margin-top:20px;
+}
+
+button:hover{
+background:#ff2e2e;
+}
+
+.gold{
+color:#d4af37;
+}
+
+.hero{
+padding-top:140px;
+}
+
+.phone{
+width:280px;
+margin:50px auto;
+background:#111;
+border-radius:30px;
+padding:20px;
+box-shadow:0 0 40px rgba(0,0,0,0.6);
+}
+
+.screen{
+background:black;
+height:400px;
+border-radius:20px;
+padding:15px;
+overflow:auto;
+}
+
+.bubble{
+padding:10px 14px;
+border-radius:12px;
+margin:8px 0;
+max-width:80%;
+}
+
+.customer{
+background:#333;
+text-align:left;
+}
+
+.system{
+background:#c50000;
+margin-left:auto;
+}
+
+.calculator{
+background:#151515;
+padding:40px;
+border-radius:12px;
+max-width:500px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:12px;
+font-size:18px;
+margin:10px 0;
+}
+
+.result{
+font-size:36px;
+margin-top:20px;
+color:#d4af37;
+}
+
+.dashboard{
+background:#151515;
+padding:30px;
+border-radius:12px;
+max-width:700px;
+margin:auto;
+}
+
+.lead{
+display:flex;
+justify-content:space-between;
+padding:12px;
+border-bottom:1px solid #333;
+}
+
+.demo-button{
+background:#d4af37;
+color:black;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<section class="hero">
+
+<h1>How Many Roof Jobs Did You Miss This Week?</h1>
+
+<p>
+Most roofing companies miss <span class="gold">3–7 calls every week</span>.
+</p>
+
+<p>
+Each one could be an <span class="gold">$8,000 – $15,000 roof</span>.
+</p>
+
+<button onclick="scrollToDemo()">See What Happens</button>
+
+</section>
+
+
+
+<section>
+
+<h2>What Happens When A Call Is Missed?</h2>
+
+<div class="phone">
+
+<div class="screen" id="chat">
+
+<div class="bubble customer">
+Customer: Need roof repair after storm damage
+</div>
+
+</div>
+
+</div>
+
+<button class="demo-button" onclick="startDemo()">Run Demo</button>
+
+</section>
+
+
+
+<section>
+
+<h2>Lead Captured Automatically</h2>
+
+<div class="dashboard">
+
+<div class="lead">
+<span>John Smith</span>
+<span>Roof Repair</span>
+<span>$9,500</span>
+</div>
+
+<div class="lead">
+<span>Sarah Davis</span>
+<span>Storm Damage</span>
+<span>$12,200</span>
+</div>
+
+<div class="lead">
+<span>Mike Johnson</span>
+<span>Roof Replacement</span>
+<span>$14,000</span>
+</div>
+
+</div>
+
+<p style="margin-top:20px;">
+No apps to learn.  
+No complicated setup.
+</p>
+
+</section>
+
+
+
+<section>
+
+<h2>How Much Revenue Are Missed Calls Costing You?</h2>
+
+<div class="calculator">
+
+<label>Missed Calls Per Week</label>
+<input id="calls" value="4">
+
+<label>Average Roof Value ($)</label>
+<input id="value" value="12000">
+
+<button onclick="calculate()">Calculate</button>
+
+<div class="result" id="result">
+$192,000 per month
+</div>
+
+<p>
+Recovering just <span class="gold">ONE</span> of those calls
+can pay for the entire system.
+</p>
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<h2>How Many Roofs Are Going To Voicemail?</h2>
+
+<p>
+RoofPulse was built to answer that question.
+</p>
+
+<button>Schedule A Walkthrough</button>
+
+</section>
+
+
+
+<script>
+
+function startDemo(){
+
+let chat=document.getElementById("chat")
+
+setTimeout(()=>{
+
+chat.innerHTML+=`
+<div class="bubble system">
+System: Sorry we missed your call. What project can we help with?
+</div>
+`
+
+},1000)
+
+setTimeout(()=>{
+
+chat.innerHTML+=`
+<div class="bubble customer">
+Customer: Roof leak after storm
+</div>
+`
+
+},2500)
+
+setTimeout(()=>{
+
+chat.innerHTML+=`
+<div class="bubble system">
+System: Got it. What’s the address?
+</div>
+`
+
+},4000)
+
+setTimeout(()=>{
+
+chat.innerHTML+=`
+<div class="bubble customer">
+Customer: 123 Oak Street
+</div>
+`
+
+},5500)
+
+setTimeout(()=>{
+
+chat.innerHTML+=`
+<div class="bubble system">
+System: Perfect. A roofer will reach out shortly.
+</div>
+`
+
+},7000)
+
+}
+
+
+
+function calculate(){
+
+let calls=document.getElementById("calls").value
+let value=document.getElementById("value").value
+
+let result=calls*value*4
+
+result=result.toLocaleString()
+
+document.getElementById("result").innerText="$"+result+" per month"
+
+}
+
+
+
+function scrollToDemo(){
+
+window.scrollTo({
+top:600,
+behavior:"smooth"
+})
+
+}
+
+</script>
+
+
+</body>
+</html>
