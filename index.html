@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoofPulse Ultimate Demo</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="hero">
+<h1>Never Miss Another Roof</h1>
+<p class="subtitle">Roofers miss 3–7 calls a week. That could mean $50k+ per month lost.</p>
+
+<div class="loss-counter">
+  <div class="label">Estimated Revenue Roofers Lose Per Month</div>
+  <div id="counter">$0</div>
+</div>
+
+<!-- Updated CTA -->
+<a href="#calculator" class="cta">See What You’re Losing</a>
+</header>
+
+<section id="calculator">
+<h2>Missed Call Calculator</h2>
+
+<label>Missed Calls Per Week</label>
+<input id="calls" type="number" value="5">
+
+<label>Average Roof Value ($)</label>
+<input id="value" type="number" value="9000">
+
+<label>Close Rate (%)</label>
+<input id="close" type="number" value="30">
+
+<button onclick="calculate()">Calculate Lost Revenue</button>
+
+<h3 id="result"></h3>
+
+<div id="barChart"></div>
+</section>
+
+<section>
+<h2>AI Receptionist Simulator</h2>
+<div class="callbox">
+<p id="ai">Press start to simulate how the AI answers a missed call.</p>
+<div class="ai-buttons">
+<button onclick="startDemo()">Start Demo</button>
+<button onclick="chooseOption('Roof Repair')">Roof Repair</button>
+<button onclick="chooseOption('Storm Damage')">Storm Damage</button>
+<button onclick="chooseOption('Inspection')">Inspection</button>
+</div>
+<audio id="ring" src="ring.mp3"></audio>
+<audio id="beep" src="beep.mp3"></audio>
+</div>
+</section>
+
+<section>
+<h2>Live Missed Call Feed</h2>
+<p>Simulates missed calls being captured automatically.</p>
+<ul id="callFeed"></ul>
+<button onclick="generateCall()">Simulate Missed Call</button>
+</section>
+
+<section>
+<h2>Lead Capture Demo</h2>
+<input id="name" placeholder="Homeowner Name">
+<input id="phone" placeholder="Phone">
+<input id="address" placeholder="Address">
+<button onclick="saveLead()">Capture Lead</button>
+<p id="leadStatus"></p>
+</section>
+
+<section>
+<h2>Lead Dashboard</h2>
+<button onclick="loadLeads()">Refresh Leads</button>
+<table>
+<thead>
+<tr><th>Name</th><th>Phone</th><th>Address</th><th>Time</th></tr>
+</thead>
+<tbody id="leadTable"></tbody>
+</table>
+</section>
+
+<section class="testimonials">
+<h2>What Contractors Realized</h2>
+<div class="card" id="testimonialCard">
+<p>"We were missing thousands in storm leads because nobody answered the phone."</p>
+<span>Texas Roofing Company</span>
+</div>
+</section>
+
+<section class="alerts">
+<h2>Storm / Competitor Alerts</h2>
+<p id="alertBox">No alerts right now.</p>
+<button onclick="triggerAlert()">Simulate Alert</button>
+</section>
+
+<footer>
+<p>RoofPulse Ultimate Demo | AI Receptionist & Lead Capture Simulator</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
