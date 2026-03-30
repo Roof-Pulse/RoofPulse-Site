@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from datetime import datetime
-import smtplib
-import os
+import smtplib, os, threading
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -21,23 +20,29 @@ DEMO_LEADS = [
 leads = []
 
 
-def send_email(to_addr, subject, html_body):
+def _send(to_addr, subject, html_body):
+    """Internal send — runs in background thread."""
     if not GMAIL_PASS:
         print(f"[EMAIL SKIPPED] No GMAIL_PASS. Would send to {to_addr}: {subject}")
-        return True, None
+        return
     try:
         msg = MIMEMultipart("alternative")
         msg["Subject"] = subject
         msg["From"]    = f"RoofPulse <{GMAIL_USER}>"
         msg["To"]      = to_addr
         msg.attach(MIMEText(html_body, "html"))
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as s:
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as s:
             s.login(GMAIL_USER, GMAIL_PASS)
             s.sendmail(GMAIL_USER, to_addr, msg.as_string())
-        return True, None
+        print(f"[EMAIL OK] Sent to {to_addr}")
     except Exception as e:
         print(f"[EMAIL ERROR] {e}")
-        return False, str(e)
+
+
+def send_async(to_addr, subject, html_body):
+    """Fire-and-forget — never blocks the request."""
+    t = threading.Thread(target=_send, args=(to_addr, subject, html_body), daemon=True)
+    t.start()
 
 
 def owner_email(name, company, phone, email, missed_calls, submitted_at):
@@ -87,7 +92,7 @@ body{{font-family:'Helvetica Neue',Arial,sans-serif;background:#0D1117;margin:0;
 .hd{{background:#0D1117;border:1px solid #ffffff10;border-bottom:none;border-radius:10px 10px 0 0;padding:40px;text-align:center}}
 .logo{{font-size:26px;font-weight:900;letter-spacing:4px;color:#fff;margin-bottom:24px;display:block}}
 .logo span{{color:#E63946}}
-.circle{{width:72px;height:72px;background:#16803420;border:2px solid #16803460;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px;line-height:72px;text-align:center}}
+.circle{{width:72px;height:72px;background:#16803420;border:2px solid #16803460;border-radius:50%;font-size:32px;margin:0 auto 20px;line-height:72px;text-align:center}}
 .hd h1{{font-size:28px;font-weight:900;color:#fff;margin:0 0 8px}}
 .hd p{{font-size:15px;color:#8B949E;margin:0}}
 .bd{{background:#161B22;border:1px solid #ffffff10;border-top:none;border-radius:0 0 10px 10px;padding:36px 40px}}
@@ -98,8 +103,7 @@ body{{font-family:'Helvetica Neue',Arial,sans-serif;background:#0D1117;margin:0;
 .ib strong{{color:#E63946}}
 .st{{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#8B949E;margin-bottom:20px}}
 .step{{display:flex;gap:16px;align-items:flex-start;margin-bottom:20px}}
-.sn{{background:#E63946;color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;line-height:32px;text-align:center}}
-.sc{{flex:1}}
+.sn{{background:#E63946;color:#fff;width:32px;height:32px;border-radius:50%;font-size:14px;font-weight:700;flex-shrink:0;line-height:32px;text-align:center}}
 .stitle{{font-size:15px;font-weight:700;color:#F0F6FC;margin-bottom:4px}}
 .sdesc{{font-size:13px;color:#8B949E;line-height:1.5}}
 hr{{border:none;border-top:1px solid #ffffff10;margin:28px 0}}
@@ -115,23 +119,20 @@ hr{{border:none;border-top:1px solid #ffffff10;margin:28px 0}}
     <p>Your free 30-day trial request has been received.</p>
   </div>
   <div class="bd">
-    <p class="greet">Hey {first} — this is a real person, not an auto-reply. I'm local to Collierville, TN and I personally set up every system. I'll be reaching out to you at <strong>{company}</strong> within the next few hours to get everything going.</p>
+    <p class="greet">Hey {first} — this is a real person, not an auto-reply. I'm local to Collierville, TN and I personally set up every system. I'll be reaching out to you at <strong>{company}</strong> within the next few hours.</p>
     <div class="ib"><p>The average roofing company we work with recovers <strong>8–14 missed leads in their first 30 days</strong> — that's $64,000–$168,000 in potential revenue that was going straight to voicemail. We're about to change that for you.</p></div>
     <div class="st">Here's exactly what happens next</div>
-    <div class="step"><div class="sn">1</div><div class="sc"><div class="stitle">I'll reach out personally</div><div class="sdesc">Expect a call or text within 2–4 hours to confirm your details and answer any questions.</div></div></div>
-    <div class="step"><div class="sn">2</div><div class="sc"><div class="stitle">30-minute setup call</div><div class="sdesc">We'll go through your business number, call script, and booking process. You don't touch any software.</div></div></div>
-    <div class="step"><div class="sn">3</div><div class="sc"><div class="stitle">Live within 48 hours</div><div class="sdesc">Your missed call text back, follow-up sequence, and booking system go live automatically.</div></div></div>
-    <div class="step"><div class="sn">4</div><div class="sc"><div class="stitle">Watch the leads come back</div><div class="sdesc">After 30 days we'll review your results together — every recovered call, every dollar saved.</div></div></div>
+    <div class="step"><div class="sn">1</div><div><div class="stitle">I'll reach out personally</div><div class="sdesc">Expect a call or text within 2–4 hours to confirm your details.</div></div></div>
+    <div class="step"><div class="sn">2</div><div><div class="stitle">30-minute setup call</div><div class="sdesc">We'll configure everything together. You don't touch any software.</div></div></div>
+    <div class="step"><div class="sn">3</div><div><div class="stitle">Live within 48 hours</div><div class="sdesc">Your missed call text back and follow-up sequences go live automatically.</div></div></div>
+    <div class="step"><div class="sn">4</div><div><div class="stitle">Watch the leads come back</div><div class="sdesc">After 30 days we'll review every recovered call and dollar saved together.</div></div></div>
     <hr>
     <div class="fl-logo">ROOF<span>PULSE</span></div>
     <p class="fl">RoofPulse · Collierville, TN<br>Questions? Reply directly to this email.<br><span style="color:#ffffff25">100% free trial. No card. No commitment.</span></p>
   </div>
 </div></body></html>"""
 
-@app.context_processor
-def inject_current_year():
-    return {"current_year": datetime.now().year}
-    
+
 @app.route('/')
 def landing():
     return render_template('landing.html')
@@ -157,11 +158,12 @@ def contact():
     missed_calls = request.form.get('missed_calls', 'Not specified')
     submitted_at = datetime.now().strftime("%B %d, %Y at %I:%M %p")
 
-    send_email(OWNER_EMAIL, f"🔥 New RoofPulse Lead: {name} — {company}", owner_email(name, company, phone, email, missed_calls, submitted_at))
-
+    # Both emails fire in background threads — never block the request
+    send_async(OWNER_EMAIL, f"🔥 New RoofPulse Lead: {name} — {company}", owner_email(name, company, phone, email, missed_calls, submitted_at))
     if email:
-        send_email(email, f"You're confirmed, {name.split()[0]}! Here's what happens next — RoofPulse", prospect_email(name, company))
+        send_async(email, f"You're confirmed, {name.split()[0]}! Here's what happens next — RoofPulse", prospect_email(name, company))
 
+    # Redirect immediately — don't wait for emails
     return redirect(url_for('thankyou'))
 
 @app.route('/thank-you')
