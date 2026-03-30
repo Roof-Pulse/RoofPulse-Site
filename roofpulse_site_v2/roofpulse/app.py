@@ -1,12 +1,17 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from datetime import datetime
-import os, threading, urllib.request, urllib.error, json
+import os, threading, smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 
-OWNER_EMAIL   = os.environ.get("OWNER_EMAIL",   "Hayesscale500@gmail.com")
-RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
-FROM_EMAIL    = os.environ.get("FROM_EMAIL",    "onboarding@resend.dev")  # works before domain verified
+OWNER_EMAIL = os.environ.get("OWNER_EMAIL", "Hayesscale500@gmail.com")
+SMTP_HOST   = os.environ.get("SMTP_HOST",   "smtp.resend.com")
+SMTP_PORT   = int(os.environ.get("SMTP_PORT", "465"))
+SMTP_USER   = os.environ.get("SMTP_USER",   "resend")
+SMTP_PASS   = os.environ.get("SMTP_PASS",   "")
+FROM_EMAIL  = os.environ.get("FROM_EMAIL",  "onboarding@resend.dev")
 
 DEMO_LEADS = [
     {"id": 1, "name": "Mike Johnson",   "phone": "(901) 555-0142", "status": "Booked",     "source": "Missed Call", "value": 8500,  "time": "2 mins ago"},
@@ -18,38 +23,26 @@ DEMO_LEADS = [
 leads = []
 
 
-def _send_resend(to_addr, subject, html_body):
-    """Send via Resend HTTPS API — no SMTP, works everywhere."""
-    if not RESEND_API_KEY:
-        print(f"[EMAIL SKIPPED] No RESEND_API_KEY set. Would send to {to_addr}: {subject}")
+def _send_smtp(to_addr, subject, html_body):
+    if not SMTP_PASS:
+        print(f"[EMAIL SKIPPED] No SMTP_PASS set. Would send to {to_addr}: {subject}")
         return
     try:
-        payload = json.dumps({
-            "from": f"RoofPulse <{FROM_EMAIL}>",
-            "to": [to_addr],
-            "subject": subject,
-            "html": html_body
-        }).encode("utf-8")
-
-        req = urllib.request.Request(
-            "https://api.resend.com/emails",
-            data=payload,
-            headers={
-                "Authorization": f"Bearer {RESEND_API_KEY}",
-                "Content-Type": "application/json"
-            },
-            method="POST"
-        )
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            print(f"[EMAIL OK] Sent to {to_addr} — status {resp.status}")
-    except urllib.error.HTTPError as e:
-        print(f"[EMAIL ERROR] HTTP {e.code}: {e.read().decode()}")
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"]    = f"RoofPulse <{FROM_EMAIL}>"
+        msg["To"]      = to_addr
+        msg.attach(MIMEText(html_body, "html"))
+        with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT, timeout=20) as s:
+            s.login(SMTP_USER, SMTP_PASS)
+            s.sendmail(FROM_EMAIL, to_addr, msg.as_string())
+        print(f"[EMAIL OK] Sent to {to_addr}")
     except Exception as e:
         print(f"[EMAIL ERROR] {e}")
 
 
 def send_async(to_addr, subject, html_body):
-    t = threading.Thread(target=_send_resend, args=(to_addr, subject, html_body), daemon=True)
+    t = threading.Thread(target=_send_smtp, args=(to_addr, subject, html_body), daemon=True)
     t.start()
 
 
