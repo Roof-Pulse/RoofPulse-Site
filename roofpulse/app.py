@@ -25,6 +25,10 @@ DEMO_MESSAGES = [
     {"from": "RoofPulse", "to": "Mike Johnson", "text": "Perfect! Thursday at 10am is confirmed. We'll send a reminder the night before. See you then!", "time": "just now", "direction": "out"},
 ]
 
+@app.context_processor
+def inject_current_year():
+    return {"current_year": datetime.now().year}
+    
 @app.route('/')
 def landing():
     return render_template('landing.html')
