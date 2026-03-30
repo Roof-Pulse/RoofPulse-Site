@@ -128,7 +128,10 @@ hr{{border:none;border-top:1px solid #ffffff10;margin:28px 0}}
   </div>
 </div></body></html>"""
 
-
+@app.context_processor
+def inject_current_year():
+    return {"current_year": datetime.now().year}
+    
 @app.route('/')
 def landing():
     return render_template('landing.html')
