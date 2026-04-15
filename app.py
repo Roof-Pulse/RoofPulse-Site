@@ -143,6 +143,13 @@ def landing():
                            version=VERSION,
                            days_live=days_live(),
                            recovered=recovered_count())
+    @app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
 
 @app.route('/api/simulate-call', methods=['POST'])
 def simulate_call():
@@ -193,6 +200,7 @@ def not_found(e):
 @app.errorhandler(500)
 def server_error(e):
     return render_template('500.html'), 500
+    
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
