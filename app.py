@@ -143,9 +143,12 @@ def landing():
                            version=VERSION,
                            days_live=days_live(),
                            recovered=recovered_count())
-    @app.route('/privacy')
+
+
+@app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
+
 
 @app.route('/terms')
 def terms():
