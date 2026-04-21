@@ -375,31 +375,6 @@
     .pilot-check::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; }
     .pilot-fine { font-size: 12px; color: var(--gray); margin-top: 16px; }
 
-    /* ── PRICING ── */
-    .pricing-section { background: var(--dark-2); padding: 90px 60px; }
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px; max-width: 720px; margin: 52px auto 0;
-    }
-    .price-card {
-      background: var(--dark); border: 1px solid var(--border);
-      border-radius: 12px; padding: 36px; transition: all .3s; position: relative;
-    }
-    .price-card.featured { border-color: var(--red); }
-    .price-card.featured::before {
-      content: 'MOST POPULAR'; position: absolute;
-      top: -11px; left: 50%; transform: translateX(-50%);
-      background: var(--red); color: var(--white);
-      font-size: 10px; font-weight: 700; letter-spacing: 2px;
-      padding: 3px 14px; border-radius: 2px;
-    }
-    .price-name { font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gray); margin-bottom: 14px; }
-    .price-amount { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: var(--white); line-height: 1; }
-    .price-period { font-size: 13px; color: var(--gray); margin-bottom: 28px; }
-    .price-features { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 11px; }
-    .price-features li { font-size: 13px; color: #cdd9e5; display: flex; align-items: flex-start; gap: 10px; line-height: 1.4; }
-    .price-features li::before { content: '✓'; color: var(--red); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
     /* ── CONTACT ── */
     .contact-section { padding: 90px 60px; }
     .contact-grid {
@@ -477,12 +452,10 @@
 <nav>
   <div class="nav-logo">ROOF<span>PULSE</span></div>
   <div class="nav-links">
-    <a href="#how">How It Works</a>
-    <a href="#demo">See the Demo</a>
-    <a href="#founder">About</a>
-    <a href="#contact" class="nav-cta">Talk to Me</a>
-    <a href="#pricing">Pricing</a>
-  </div>
+  <a href="#how">How</a>
+  <a href="#demo">Demo</a>
+  <a href="#pilot" class="nav-cta">Free Pilot</a>
+</div>
 </nav>
 
 <!-- HERO -->
@@ -508,8 +481,7 @@
     </p>
 
     <div class="hero-actions">
-      <a href="#demo" class="btn-primary">See the Demo</a>
-      <a href="#contact" class="btn-ghost">Talk to Me →</a>
+      <a href="#contact" class="btn-primary">Claim Free Pilot →</a>
     </div>
 
     <div class="hero-trust">
@@ -524,10 +496,33 @@
       <div class="trust-item">
         <div class="trust-dot"></div>
         No contracts, ever
+       <div class="trust-item">
+        <div class="trust-dot"></div>
+        Reply in 2hrs (10am-5pm)
       </div>
     </div>
   </div>
 
+  <!-- PILOT OFFER -->
+<section class="pilot-section" id="pilot">
+  <div class="pilot-card">
+    <div class="pilot-eyebrow">Limited Pilot Offer</div>
+    <h2 class="pilot-title">FREE 14-DAY PILOT<br>FOR LOCAL ROOFERS</h2>
+    <p class="pilot-desc">I'm looking for one or two roofing companies in the Memphis area willing to try this free. You get a fully working system. I get a real case study. Everyone wins.</p>
+
+<div class="pilot-checklist">
+  <div class="pilot-check">Live in 48 hours — I set it up</div>
+  <div class="pilot-check">Texts missed calls in <60s</div>
+  <div class="pilot-check">AI books inspections automatically</div>
+  <div class="pilot-check">14 days free, no card needed</div>
+</div>
+<a href="#contact" class="btn-primary">Claim Free Pilot</a>
+   <p class="pilot-fine" style="font-size: 11px; color: var(--gray); margin-top: 20px;">
+  After pilot: $297–$497/mo (volume-based). Month-to-month.
+</p>
+  </div>
+</section>
+  
   <!-- Conversation mockup -->
   <div class="hero-right">
     <div class="mockup-label">What happens when you miss a call</div>
@@ -751,76 +746,6 @@
   </div>
 </section>
 
-<!-- PILOT OFFER -->
-<section class="pilot-section" id="pilot">
-  <div class="pilot-card">
-    <div class="pilot-eyebrow">Limited Pilot Offer</div>
-    <h2 class="pilot-title">FREE 14-DAY PILOT<br>FOR LOCAL ROOFERS</h2>
-    <p class="pilot-desc">I'm looking for one or two roofing companies in the Memphis area willing to try this free. You get a fully working system. I get a real case study. Everyone wins.</p>
-
-    <div class="pilot-checklist">
-      <div class="pilot-check">Full missed call text back system — live in 48hrs</div>
-      <div class="pilot-check">5-step automated follow-up sequence</div>
-      <div class="pilot-check">Appointment booking built in</div>
-      <div class="pilot-check">I set everything up — you do nothing technical</div>
-      <div class="pilot-check">14 days completely free — no card needed</div>
-      <div class="pilot-check">Cancel or continue — your choice at day 14</div>
-    </div>
-
-    <a href="#contact" class="btn-primary" style="font-size:15px;padding:16px 40px;">Claim the Free Pilot →</a>
-    <p class="pilot-fine">After the pilot: $297–$497/month depending on what you need. Month to month, no contracts.</p>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing-section" id="pricing">
-  <div style="text-align:center;">
-    <div class="section-label">Early Access Pricing</div>
-    <h2 class="section-title">Pilot Tiers</h2>
-    <p class="section-sub" style="margin:0 auto 12px;">
-      You're getting in early. These are introductory rates for the first few roofers
-      who try this — you can upgrade, downgrade, or pause any time, no questions asked.
-    </p>
-    <p style="font-size:13px;color:var(--red);font-weight:600;margin-bottom:0;">
-      Built and run by a local developer in Collierville, TN — no offshore call centers, no scripts, no lock-in.
-    </p>
-  </div>
-
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-name">Early Access — Starter</div>
-      <div class="price-amount">$297</div>
-      <div class="price-period">/month · limited slots · cancel anytime</div>
-      <ul class="price-features">
-        <li>Missed call text back</li>
-        <li>3-step follow-up sequence</li>
-        <li>CRM — up to 200 leads</li>
-        <li>Appointment booking</li>
-        <li>Direct line to me — always</li>
-      </ul>
-      <a href="#contact" class="btn-primary" style="width:100%;text-align:center;display:block;">Claim a Slot</a>
-      <p style="font-size:11px;color:var(--gray);text-align:center;margin-top:10px;">Pilot pricing — locked in for your first 6 months</p>
-    </div>
-
-    <div class="price-card featured">
-      <div class="price-name">Early Access — AI Receptionist</div>
-      <div class="price-amount">$497</div>
-      <div class="price-period">/month · limited slots · cancel anytime</div>
-      <ul class="price-features">
-        <li>Everything in Starter</li>
-          <li>AI receptionist answers & qualifies leads</li>
-          <li>Handles the full conversation automatically</li>
-          <li>5-step follow-up sequence</li>
-          <li>Storm surge call handling</li>
-          <li>Unlimited leads in CRM</li>
-          <li>Review request automation</li>
-          <li>Monthly results summary</li>
-      </ul>
-      <a href="#contact" class="btn-primary" style="width:100%;text-align:center;display:block;">Try AI Receptionist Free</a>
-      <p style="font-size:11px;color:var(--gray);text-align:center;margin-top:10px;">Pilot pricing — locked in for your first 6 months</p>
-    </div>
-  </div>
-</section>
 
 <!-- CONTACT -->
 <section class="contact-section" id="contact">
@@ -857,39 +782,22 @@
     </div>
 
     <div>
-      <form class="contact-form" id="contact-form">
-        <div class="form-group">
-          <label class="form-label">Your Name</label>
-          <input class="form-input" type="text" name="name" placeholder="John Smith" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Company Name</label>
-          <input class="form-input" type="text" name="company" placeholder="Smith Roofing Co." required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Phone Number</label>
-          <input class="form-input" type="tel" name="phone" placeholder="(901) 555-0000" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" name="email" placeholder="you@smithroofing.com" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">How many calls do you think you miss per week?</label>
-          <select class="form-input" name="missed_calls" style="cursor:pointer;">
-            <option value="">Rough estimate</option>
-            <option>1–5 calls</option>
-            <option>5–15 calls</option>
-            <option>15–30 calls</option>
-            <option>30+ calls</option>
-            <option>Honestly not sure</option>
-          </select>
-        </div>
-        <button type="submit" class="btn-primary" style="width:100%;text-align:center;font-size:15px;padding:16px;">
-          Claim My Free Pilot →
-        </button>
-        <p style="font-size:11px;color:var(--gray);text-align:center;margin-top:4px;">No card. No commitment. I'll reach out personally.</p>
-      </form>
+     <form class="contact-form" id="contact-form">
+  <div class="form-group">
+    <label class="form-label">Phone Number</label>
+    <input class="form-input" type="tel" name="phone" placeholder="(901) 555-0000" required>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Email (for confirmation)</label>
+    <input class="form-input" type="email" name="email" placeholder="you@roofing.com" required>
+  </div>
+  <button type="submit" class="btn-primary" style="width:100%; font-size:15px; padding:16px;">
+    Claim Free Pilot →
+  </button>
+  <p style="font-size:11px; color:var(--gray); text-align:center; margin-top:8px;">
+  Response within 2 hours (10am-5pm CDT M-F). Text works 24/7.
+</p>
+</form>
     </div>
   </div>
 </section>
