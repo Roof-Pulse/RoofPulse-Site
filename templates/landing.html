@@ -160,6 +160,11 @@
       overflow: hidden;
     }
 
+.section, .how-section, .demo-section,
+.founder-section, .pilot-section,
+.contact-section, .stats-panel {
+  width: 100%;
+}
     .phone-header {
       background: var(--dark-3);
       padding: 14px 20px;
@@ -509,30 +514,12 @@
       <div class="trust-item">
         <div class="trust-dot"></div>
         No contracts, ever
+         </div>
        <div class="trust-item">
         <div class="trust-dot"></div>
         Reply in 2hrs (10am-5pm)
       </div>
     </div>
-  </div>
-
-  <!-- PILOT OFFER -->
-<section class="pilot-section" id="pilot">
-  <div class="pilot-card">
-    <div class="pilot-eyebrow">Limited Pilot Offer</div>
-    <h2 class="pilot-title">FREE 14-DAY PILOT<br>FOR LOCAL ROOFERS</h2>
-    <p class="pilot-desc">I'm looking for one or two roofing companies in the Memphis area willing to try this free. You get a fully working system. I get a real case study. Everyone wins.</p>
-
-<div class="pilot-checklist">
-  <div class="pilot-check">Live in 48 hours — I set it up</div>
-  <div class="pilot-check">Texts missed calls in <60s</div>
-  <div class="pilot-check">AI books inspections automatically</div>
-  <div class="pilot-check">14 days free, no card needed</div>
-</div>
-<a href="#contact" class="btn-primary">Claim Free Pilot</a>
-   <p class="pilot-fine" style="font-size: 11px; color: var(--gray); margin-top: 20px;">
-  After pilot: $297–$497/mo (volume-based). Month-to-month.
-</p>
   </div>
 </section>
   
@@ -585,7 +572,27 @@
     </div>
   </div>
 </section>
+  
+  <!-- PILOT OFFER -->
+<section class="pilot-section" id="pilot">
+  <div class="pilot-card">
+    <div class="pilot-eyebrow">Limited Pilot Offer</div>
+    <h2 class="pilot-title">FREE 14-DAY PILOT<br>FOR LOCAL ROOFERS</h2>
+    <p class="pilot-desc">I'm looking for one or two roofing companies in the Memphis area willing to try this free. You get a fully working system. I get a real case study. Everyone wins.</p>
 
+<div class="pilot-checklist">
+  <div class="pilot-check">Live in 48 hours — I set it up</div>
+  <div class="pilot-check">Texts missed calls in <60s</div>
+  <div class="pilot-check">AI books inspections automatically</div>
+  <div class="pilot-check">14 days free, no card needed</div>
+</div>
+<a href="#contact" class="btn-primary">Claim Free Pilot</a>
+   <p class="pilot-fine" style="font-size: 11px; color: var(--gray); margin-top: 20px;">
+  After pilot: $297–$497/mo (volume-based). Month-to-month.
+</p>
+  </div>
+</section>
+  
 <!-- PROBLEM -->
 <section class="section" id="problem">
   <div class="section-label">Why This Matters</div>
@@ -797,6 +804,8 @@
     <div>
      <form class="contact-form" id="contact-form">
   <div class="form-group">
+    <label class="form-label">Your Name</label>
+    <input class="form-input" type="text" name="name" placeholder="John Smith" required>
     <label class="form-label">Phone Number</label>
     <input class="form-input" type="tel" name="phone" placeholder="(901) 555-0000" required>
   </div>
@@ -808,7 +817,7 @@
     Claim Free Pilot →
   </button>
   <p style="font-size:11px; color:var(--gray); text-align:center; margin-top:8px;">
-  Response within 2 hours (10am-5pm CDT M-F). Text works 24/7.
+  Response within 2 hours (10am-5pm CDT M-F). 
 </p>
 </form>
     </div>
@@ -830,7 +839,8 @@
       v0.1.0 · Early access · {{ days_live }} days live
     </div>
   </div>
-
+</footer>
+  
 <script>
 // Year
 document.getElementById('yr').textContent = new Date().getFullYear();
