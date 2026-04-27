@@ -1100,6 +1100,98 @@
 
       body { padding-bottom: 82px; }
     }
+   
+    .message-area {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg {
+  max-width: 82%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.35s ease forwards;
+}
+
+.msg.bot {
+  background: var(--dark-3);
+  color: var(--light);
+  align-self: flex-start;
+  border-radius: 14px 14px 14px 3px;
+}
+
+.msg.user {
+  background: var(--red);
+  color: white;
+  align-self: flex-end;
+  border-radius: 14px 14px 3px 14px;
+}
+
+.demo-hover-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%) translateY(10px);
+  background: var(--red);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.25s ease;
+}
+
+.phone-mockup:hover .demo-hover-btn {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+    .typing {
+  width: 50px;
+  height: 18px;
+  border-radius: 14px;
+  background: var(--dark-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px;
+}
+
+.typing span {
+  width: 4px;
+  height: 4px;
+  background: #aaa;
+  border-radius: 50%;
+  animation: blink 1.2s infinite;
+}
+
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+    @keyframes phoneShake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+.phone-mockup.shake {
+  animation: phoneShake 0.4s ease;
+}
   </style>
 </head>
 <body>
@@ -1171,35 +1263,17 @@
           </div>
         </div>
 
-        <div class="phone-body">
-          <div class="event-pill">
-            <div>📞</div>
-            <div><strong>Missed call detected</strong> — text sent back in 47 seconds</div>
-          </div>
+      <div class="phone-body">
+  <div class="event-pill">
+    <div>📞</div>
+    <div><strong>Missed call detected</strong> — text sent back in 47 seconds</div>
+  </div>
 
-          <div class="msg-wrap">
-            <div class="sim-meta right">Sent automatically</div>
-            <div class="bubble bubble-out">
-              Hey! Sorry we missed your call — this is Smith Roofing Co. Are you dealing with storm damage, a leak, or something else? We can usually get someone out quickly for a free inspection. 🏠
-            </div>
-          </div>
+  <div class="message-area" id="messageArea"></div>
 
-          <div class="msg-wrap">
-            <div class="sim-meta">Homeowner replied 3 minutes later</div>
-            <div class="bubble bubble-in">
-              Yes — storm damage from last week. Can someone come Thursday?
-            </div>
-          </div>
-
-          <div class="msg-wrap">
-            <div class="sim-meta right">RoofPulse keeps it moving</div>
-            <div class="bubble bubble-out">
-              Thursday works great. I can have someone there at 10am for a free inspection. Does that work?
-            </div>
-          </div>
-
-          <div class="response-badge">
-            ✓ Appointment booked — zero manual follow-up
+  <a href="#demo" class="https://www.getroofpulse.com/#demo">
+    See It Book a Lead →
+            </a>
           </div>
         </div>
       </div>
@@ -1293,7 +1367,7 @@
 
   <section class="how-section" id="how">
     <div class="section-label">How It Works</div>
-    <h2 class="section-title">Simple Setup.<br>Runs Itself.</h2>
+    <h2 class="section-title">Four Steps<br>ZERO HEADACHES.</h2>
     <p class="section-sub">
       No extra software for your team to learn. I set it up. Your missed calls start getting worked automatically.
     </p>
@@ -1562,106 +1636,204 @@
 
   <a href="#contact" class="sticky-cta">Stop Missing Jobs — Try It Free</a>
 
-  <script>
-    document.getElementById('yr').textContent = new Date().getFullYear();
+ <script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
-    function runDemo() {
-      const name  = document.getElementById('sim-name').value  || 'Mike Johnson';
-      const phone = document.getElementById('sim-phone').value || '(901) 555-0142';
-      const issue = document.getElementById('sim-issue').value || 'storm damage';
-      const first = name.split(' ')[0];
-      const thread = document.getElementById('sim-thread');
-      const result = document.getElementById('sim-result');
+  const messages = [
+    { text: "Hey, this is Smith Roofing Co — saw we missed your call. How can we help?", type: "bot" },
+    { text: "I need a roof repair estimate.", type: "user" },
+    { text: "Absolutely. What’s the property address?", type: "bot" },
+    { text: "123 Oak Ridge Dr.", type: "user" },
+    { text: "Perfect — we’ll get you booked with the next available roofing specialist.", type: "bot" }
+  ];
 
-      thread.innerHTML = `<p style="font-size:13px;color:var(--gray)">⚡ Missed call detected from ${phone}...</p>`;
-      result.style.display = 'none';
+  let currentIndex = 0;
+  let paused = false;
 
-      const msgs = [
-        {
-          dir:'out',
-          label:'RoofPulse sent automatically (47s later)',
-          text:`Hey ${first}! Sorry we missed your call — this is Smith Roofing Co. Are you dealing with ${issue}? We can usually get someone out quickly for a free inspection. Just reply here and we’ll get you taken care of.`
-        },
-        {
-          dir:'in',
-          label:`${name} replied`,
-          text:'Yes, I need someone to look at my roof. Can you come Thursday?'
-        },
-        {
-          dir:'out',
-          label:'RoofPulse replied automatically',
-          text:`Thursday works great, ${first}. I can have someone there at 10am for a free inspection. Does that work for you?`
-        },
-        {
-          dir:'in',
-          label:`${name} confirmed`,
-          text:'Perfect, that works.'
-        },
-        {
-          dir:'out',
-          label:'RoofPulse confirmed & logged',
-          text:`Awesome — you’re all set for Thursday at 10am. We’ll see you then. ✅`
-        }
-      ];
+  function addMessage(message) {
+    const messageArea = document.getElementById("messageArea");
+    if (!messageArea) return;
 
-      setTimeout(() => {
-        thread.innerHTML = '';
-        msgs.forEach((m, i) => {
-          setTimeout(() => {
-            const lbl = document.createElement('div');
-            lbl.className = 'sim-meta' + (m.dir === 'out' ? ' right' : '');
-            lbl.textContent = m.label;
+    const bubble = document.createElement("div");
+    bubble.className = `msg ${message.type}`;
+    bubble.textContent = message.text;
+    messageArea.appendChild(bubble);
 
-            const el = document.createElement('div');
-            el.className = `sim-msg sim-${m.dir}`;
-            el.textContent = m.text;
-            el.style.animationDelay = '0s';
+    messageArea.scrollTop = messageArea.scrollHeight;
+  }
 
-            thread.appendChild(lbl);
-            thread.appendChild(el);
-            thread.scrollTop = thread.scrollHeight;
+  function playSequence() {
+    if (currentIndex >= messages.length) return;
 
-            if (i === 0) {
-              result.style.display = 'block';
-              const statEl = document.getElementById('stat-recovered');
-              if (statEl) statEl.textContent = parseInt(statEl.textContent || 0) + 1;
-            }
-          }, i * 950);
-        });
-      }, 700);
+    // pause halfway + typing indicator
+    if (currentIndex === 2 && !paused) {
+      paused = true;
+
+      const messageArea = document.getElementById("messageArea");
+
+      const typing = document.createElement("div");
+      typing.className = "typing";
+      typing.id = "typingIndicator";
+      typing.innerHTML = "<span></span><span></span><span></span>";
+
+      messageArea.appendChild(typing);
+      messageArea.scrollTop = messageArea.scrollHeight;
+
+      return;
     }
 
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-      contactForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const btn = contactForm.querySelector('button[type="submit"]');
-        const originalText = btn.textContent;
+    // small shake on first message
+    if (currentIndex === 0) {
+      const mockup = document.getElementById("phoneMockup");
+      if (mockup) {
+        mockup.classList.add("shake");
+        setTimeout(() => mockup.classList.remove("shake"), 400);
+      }
+    }
 
-        btn.textContent = 'Sending...';
-        btn.disabled = true;
+    addMessage(messages[currentIndex]);
+    currentIndex++;
 
-        try {
-          const response = await fetch('https://formspree.io/f/mwvwbegl', {
-            method: 'POST',
-            body: new FormData(contactForm),
-            headers: { 'Accept': 'application/json' }
-          });
+    setTimeout(playSequence, 900);
+  }
 
-          if (response.ok) {
-            window.location.href = '/thank-you';
-          } else {
-            btn.textContent = originalText;
-            btn.disabled = false;
-            alert('Something went wrong — message me directly at Hayesscale500@gmail.com');
+  function startMessages() {
+    const messageArea = document.getElementById("messageArea");
+    const mockup = document.getElementById("phoneMockup");
+
+    if (!messageArea) return;
+
+    messageArea.innerHTML = "";
+    currentIndex = 0;
+    paused = false;
+
+    // initial shake (missed call moment)
+    if (mockup) {
+      mockup.classList.add("shake");
+      setTimeout(() => mockup.classList.remove("shake"), 400);
+    }
+
+    playSequence();
+  }
+
+  function resumeMessages() {
+    if (!paused) return;
+
+    paused = false;
+
+    const typing = document.getElementById("typingIndicator");
+    if (typing) typing.remove();
+
+    playSequence();
+  }
+
+  window.addEventListener("load", startMessages);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const mockup = document.getElementById("phoneMockup");
+    if (mockup) {
+      mockup.addEventListener("mouseenter", resumeMessages);
+    }
+  });
+
+  // ===== KEEP YOUR EXISTING DEMO FUNCTION =====
+  function runDemo() {
+    const name  = document.getElementById('sim-name').value  || 'Mike Johnson';
+    const phone = document.getElementById('sim-phone').value || '(901) 555-0142';
+    const issue = document.getElementById('sim-issue').value || 'storm damage';
+    const first = name.split(' ')[0];
+    const thread = document.getElementById('sim-thread');
+    const result = document.getElementById('sim-result');
+
+    thread.innerHTML = `<p style="font-size:13px;color:var(--gray)">⚡ Missed call detected from ${phone}...</p>`;
+    result.style.display = 'none';
+
+    const msgs = [
+      {
+        dir:'out',
+        label:'RoofPulse sent automatically (47s later)',
+        text:`Hey ${first}! Sorry we missed your call — this is Smith Roofing Co. Are you dealing with ${issue}? We can usually get someone out quickly for a free inspection. Just reply here and we’ll get you taken care of.`
+      },
+      {
+        dir:'in',
+        label:`${name} replied`,
+        text:'Yes, I need someone to look at my roof. Can you come Thursday?'
+      },
+      {
+        dir:'out',
+        label:'RoofPulse replied automatically',
+        text:`Thursday works great, ${first}. I can have someone there at 10am for a free inspection. Does that work for you?`
+      },
+      {
+        dir:'in',
+        label:`${name} confirmed`,
+        text:'Perfect, that works.'
+      },
+      {
+        dir:'out',
+        label:'RoofPulse confirmed & logged',
+        text:`Awesome — you’re all set for Thursday at 10am. We’ll see you then. ✅`
+      }
+    ];
+
+    setTimeout(() => {
+      thread.innerHTML = '';
+      msgs.forEach((m, i) => {
+        setTimeout(() => {
+          const lbl = document.createElement('div');
+          lbl.className = 'sim-meta' + (m.dir === 'out' ? ' right' : '');
+          lbl.textContent = m.label;
+
+          const el = document.createElement('div');
+          el.className = `sim-msg sim-${m.dir}`;
+          el.textContent = m.text;
+
+          thread.appendChild(lbl);
+          thread.appendChild(el);
+          thread.scrollTop = thread.scrollHeight;
+
+          if (i === 0) {
+            result.style.display = 'block';
+            const statEl = document.getElementById('stat-recovered');
+            if (statEl) statEl.textContent = parseInt(statEl.textContent || 0) + 1;
           }
-        } catch (err) {
+        }, i * 950);
+      });
+    }, 700);
+  }
+
+  // ===== KEEP YOUR CONTACT FORM =====
+  const contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = contactForm.querySelector('button[type="submit"]');
+      const originalText = btn.textContent;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      try {
+        const response = await fetch('https://formspree.io/f/mwvwbegl', {
+          method: 'POST',
+          body: new FormData(contactForm),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          window.location.href = '/thank-you';
+        } else {
           btn.textContent = originalText;
           btn.disabled = false;
-          alert('Something went wrong — message me directly at Hayesscale500@gmail.com');
+          alert('Something went wrong — message me directly at Haykei@getroofpulse.com');
         }
-      });
-    }
-  </script>
+      } catch (err) {
+        btn.textContent = originalText;
+        btn.disabled = false;
+        alert('Something went wrong — message me directly at Haykei@getroofpulse.com');
+      }
+    });
+  }
+</script>
 </body>
 </html>
