@@ -779,6 +779,12 @@
       transition: .2s;
     }
 
+    .sim-btn:disabled {
+      opacity: .72;
+      cursor: wait;
+      transform: none;
+    }
+
     .sim-btn:hover { background: var(--red-dark); }
 
     .message-thread {
@@ -2084,7 +2090,7 @@
             <input class="form-input" id="sim-name" type="text" placeholder="Caller name (e.g. Mike Johnson)">
             <input class="form-input" id="sim-phone" type="text" placeholder="Their number (e.g. 901-555-0142)">
             <input class="form-input" id="sim-issue" type="text" placeholder="Roofing issue (e.g. active leak from storm)">
-            <button class="sim-btn demo-trigger" onclick="runDemo()">Run The Recovery Demo →</button>
+            <button class="sim-btn demo-trigger" onclick="runDemo()">Send The Demo Text →</button>
           </div>
 
           <div id="sim-result" style="display:none;margin-top:18px;">
@@ -2375,7 +2381,12 @@
 
   function playSequence() {
     clearTimeout(sequenceTimer);
-    if (currentIndex >= messages.length) return;
+
+    // When the hero demo finishes, wait a moment and restart so it keeps feeling alive.
+    if (currentIndex >= messages.length) {
+      sequenceTimer = setTimeout(startMessages, 3200);
+      return;
+    }
 
     // Pause after the homeowner replies. Hover/tap resumes the booking flow.
     if (currentIndex === 2 && !hasPausedOnce) {
@@ -2455,72 +2466,118 @@
     }
   });
 
-  // ===== KEEP YOUR EXISTING DEMO FUNCTION =====
+  // ===== INTERACTIVE RECOVERY DEMO =====
+  let demoTimers = [];
+
+  function clearDemoTimers() {
+    demoTimers.forEach(timer => clearTimeout(timer));
+    demoTimers = [];
+  }
+
+  function cleanValue(value, fallback) {
+    return (value || '').trim() || fallback;
+  }
+
   function runDemo() {
-    const name  = document.getElementById('sim-name').value  || 'Mike Johnson';
-    const phone = document.getElementById('sim-phone').value || '(901) 555-0142';
-    const issue = document.getElementById('sim-issue').value || 'active leak from storm damage';
-    const first = name.split(' ')[0];
+    clearDemoTimers();
+
+    const nameInput = document.getElementById('sim-name');
+    const phoneInput = document.getElementById('sim-phone');
+    const issueInput = document.getElementById('sim-issue');
     const thread = document.getElementById('sim-thread');
     const result = document.getElementById('sim-result');
+    const button = document.querySelector('.sim-btn');
 
-    thread.innerHTML = `<p style="font-size:13px;color:var(--gray)">📞 Missed storm call detected from ${phone} at 7:42 PM...</p>`;
-    result.style.display = 'none';
+    if (!thread) return;
+
+    const name  = cleanValue(nameInput && nameInput.value, 'Mike Johnson');
+    const phone = cleanValue(phoneInput && phoneInput.value, '(901) 555-0142');
+    const issue = cleanValue(issueInput && issueInput.value, 'active leak from storm damage');
+    const first = name.split(' ')[0] || 'there';
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Sending Demo Text...';
+    }
+
+    thread.innerHTML = '<p style="font-size:13px;color:var(--gray)">📞 Missed call detected from <strong style="color:var(--white)">' + phone + '</strong> after hours...</p>';
+    if (result) result.style.display = 'none';
 
     const msgs = [
       {
         dir:'out',
         label:'RoofPulse sent automatically (47s later)',
-        text:`Hey ${first} — this is Smith Roofing. Sorry we missed you. Are you dealing with ${issue}? Reply here and we’ll help get you on the inspection list.`
+        text:'Hey ' + first + ' — this is Smith Roofing. Sorry we missed your call. Are you dealing with ' + issue + '? Reply here and we’ll help get you on the inspection list.'
       },
       {
         dir:'in',
-        label:`${name} replied`,
-        text:'Yes. Water came in after the storm. Can someone look at it tomorrow?'
+        label:name + ' replied',
+        text:'Yes, it’s ' + issue + '. Can someone come look at it tomorrow?'
       },
       {
         dir:'out',
-        label:'RoofPulse replied automatically',
-        text:`Yes — I can put you down for tomorrow at 10:00 AM for a free inspection. Does that work?`
+        label:'RoofPulse keeps the lead moving',
+        text:'Yes — we can put you down for tomorrow at 10:00 AM for a free inspection. What’s the property address?'
       },
       {
         dir:'in',
-        label:`${name} confirmed`,
-        text:'Perfect, that works.'
+        label:name + ' sent address',
+        text:'123 Oak Ridge Dr.'
       },
       {
         dir:'out',
-        label:'RoofPulse confirmed & logged',
-        text:`Awesome — you’re booked for tomorrow at 10:00 AM. We’ll see you then. ✅`
+        label:'RoofPulse confirmed & logged the opportunity',
+        text:'Perfect — you’re booked for tomorrow at 10:00 AM. We’ll see you then. ✅'
       }
     ];
 
-    setTimeout(() => {
+    const firstTimer = setTimeout(() => {
       thread.innerHTML = '';
+
       msgs.forEach((m, i) => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           const lbl = document.createElement('div');
           lbl.className = 'sim-meta' + (m.dir === 'out' ? ' right' : '');
           lbl.textContent = m.label;
 
           const el = document.createElement('div');
-          el.className = `sim-msg sim-${m.dir}`;
+          el.className = 'sim-msg sim-' + m.dir;
           el.textContent = m.text;
 
           thread.appendChild(lbl);
           thread.appendChild(el);
           thread.scrollTop = thread.scrollHeight;
 
-          if (i === 0) {
+          if (i === 0 && result) {
             result.style.display = 'block';
             const statEl = document.getElementById('stat-recovered');
             if (statEl) statEl.textContent = (parseInt(statEl.textContent, 10) || 0) + 1;
           }
+
+          if (i === msgs.length - 1 && button) {
+            button.disabled = false;
+            button.textContent = 'Send Another Demo Text →';
+          }
         }, i * 950);
+        demoTimers.push(timer);
       });
-    }, 700);
+    }, 650);
+
+    demoTimers.push(firstTimer);
   }
 
+  // Make the form feel real: pressing Enter runs the demo instead of doing nothing.
+  ['sim-name', 'sim-phone', 'sim-issue'].forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          runDemo();
+        }
+      });
+    }
+  });
 
   // Premium scroll reveal
   const revealEls = document.querySelectorAll('.fade-up');
