@@ -12,7 +12,15 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RoofPulse — Stop Losing Roofing Jobs From Missed Calls</title>
+  <meta name="description" content="RoofPulse helps roofing companies recover storm and after-hours calls with instant missed-call response, smart follow-up, and a simple booking flow. Built for roofers who cannot afford to lose urgent jobs to voicemail.">
+  <meta name="keywords" content="roofing missed call system, storm call recovery for roofers, after hours roofing calls, roofing lead capture, roofers missed calls, roofing automation">
+  <meta property="og:title" content="RoofPulse — Storm & After-Hours Call Recovery for Roofers">
+  <meta property="og:description" content="Capture urgent roofing calls before they go to the next contractor. Instant response, follow-up, and booking support for roofers.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.getroofpulse.com/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://www.getroofpulse.com/">
+  <title>RoofPulse — Storm & After-Hours Revenue Recovery for Roofers</title>
  <!-- RoofPulse favicons / app icons -->
 <link rel="icon" type="image/png" sizes="32x32" href="/static/roofpulse_icon_premium.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/static/roofpulse_icon_premium.png">
@@ -37,7 +45,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
     body {
       font-family: 'Barlow', sans-serif;
       background: var(--dark);
@@ -269,6 +277,7 @@
     }
 
     .phone-mockup {
+      position: relative;
       background: var(--dark-2);
       border: 1px solid var(--border);
       border-radius: 18px;
@@ -401,11 +410,14 @@
     }
 
     .mockup-money {
-      margin-top: 14px;
-      font-size: 13px;
+      margin-top: 4px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
       color: #ffd5d8;
-      font-weight: 700;
+      font-weight: 800;
       text-align: center;
+      line-height: 1.45;
     }
 
     .pilot-mini {
@@ -1053,6 +1065,68 @@
       font-size: 14px;
       font-weight: 800;
       box-shadow: 0 16px 40px rgba(0,0,0,.28);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+
+    .sticky-cta.hide-sticky {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(18px);
+    }
+
+
+    .recovery-stack {
+      padding: 72px 60px;
+      background: linear-gradient(180deg, #0d1117 0%, #131922 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .recovery-stack-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .recovery-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .recovery-card {
+      background: var(--dark-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .recovery-card strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .recovery-card p {
+      color: var(--gray);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .phone-mockup { position: relative; }
+
+    .phone-mockup.paused {
+      box-shadow: 0 20px 70px rgba(230,57,70,.18), 0 20px 60px rgba(0,0,0,.25);
+    }
+
+    .hover-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 8px;
     }
 
     @media (max-width: 980px) {
@@ -1080,9 +1154,11 @@
         min-width: 0;
       }
 
-      .section, .how-section, .demo-section, .founder-section, .pilot-section, .contact-section {
+      .section, .how-section, .demo-section, .founder-section, .pilot-section, .contact-section, .recovery-stack {
         padding: 62px 22px;
       }
+
+      .recovery-stack-inner, .recovery-card-grid { grid-template-columns: 1fr; }
 
       .pain-strip, .stats-panel { padding: 28px 22px; }
 
@@ -1105,6 +1181,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-height: 220px;
 }
 
 .msg {
@@ -1133,25 +1210,34 @@
 }
 
 .demo-hover-btn {
-  position: absolute;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%) translateY(10px);
+  align-self: center;
   background: var(--red);
   color: white;
-  padding: 10px 16px;
+  border: none;
+  padding: 0 16px;
   border-radius: 999px;
+  font-family: 'Barlow', sans-serif;
   font-size: 12px;
   font-weight: 800;
+  line-height: 1;
   opacity: 0;
+  max-height: 0;
+  overflow: hidden;
   pointer-events: none;
-  transition: 0.25s ease;
+  cursor: pointer;
+  transform: translateY(8px);
+  transition: opacity .22s ease, transform .22s ease, max-height .22s ease, padding .22s ease, background .18s ease;
 }
 
-.phone-mockup:hover .demo-hover-btn {
+.demo-hover-btn:hover { background: var(--red-dark); }
+
+.phone-mockup:hover .demo-hover-btn,
+.phone-mockup.paused .demo-hover-btn {
   opacity: 1;
+  max-height: 42px;
+  padding: 10px 16px;
   pointer-events: auto;
-  transform: translateX(-50%) translateY(0);
+  transform: translateY(0);
 }
     .typing {
   width: 50px;
@@ -1192,70 +1278,520 @@
 .phone-mockup.shake {
   animation: phoneShake 0.4s ease;
 }
+
+
+    /* Premium conversion additions */
+    .trust-ribbon {
+      max-width: 760px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 24px 0 28px;
+    }
+
+    .trust-item {
+      background: #ffffff08;
+      border: 1px solid #ffffff12;
+      border-radius: 12px;
+      padding: 12px 13px;
+      font-size: 12px;
+      color: #dce3ea;
+      line-height: 1.45;
+    }
+
+    .trust-item strong {
+      display: block;
+      color: var(--white);
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    .premium-line {
+      font-size: 13px;
+      color: #ffffff9c;
+      border-left: 3px solid var(--red);
+      padding-left: 13px;
+      margin: 0 0 24px;
+      max-width: 620px;
+      line-height: 1.65;
+    }
+
+    .premium-panel-section {
+      padding: 84px 60px;
+      background: radial-gradient(circle at 20% 0%, #E6394615, transparent 34%), var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .premium-panel {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .premium-card {
+      background: linear-gradient(180deg, #171d26 0%, #10151d 100%);
+      border: 1px solid #ffffff14;
+      border-radius: 18px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+    }
+
+    .premium-card.highlight {
+      border-color: #E6394655;
+      box-shadow: 0 20px 70px rgba(230,57,70,.13);
+    }
+
+    .premium-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .premium-card p {
+      color: var(--gray);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .premium-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .premium-list-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      background: #ffffff06;
+      border: 1px solid #ffffff10;
+      border-radius: 12px;
+      padding: 14px;
+      color: #d9e0e8;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .premium-list-item span {
+      color: var(--red);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .fit-section {
+      padding: 84px 60px;
+      background: var(--dark-2);
+    }
+
+    .fit-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .fit-card {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 26px;
+      min-height: 180px;
+    }
+
+    .fit-card .fit-icon {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .fit-card h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .fit-card p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.65;
+    }
+
+    .offer-stack-section {
+      padding: 90px 60px;
+      background: var(--dark);
+    }
+
+    .offer-stack {
+      max-width: 980px;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #171d26, #111720 60%, #2b1015);
+      border: 1px solid #ffffff16;
+      border-radius: 22px;
+      padding: 44px;
+      box-shadow: 0 24px 80px rgba(0,0,0,.28);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offer-stack::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 10%, #E6394622, transparent 28%);
+      pointer-events: none;
+    }
+
+    .offer-stack > * { position: relative; z-index: 1; }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 26px 0 30px;
+    }
+
+    .offer-item {
+      background: #0D111780;
+      border: 1px solid #ffffff12;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 13px;
+      color: #d9e0e8;
+      line-height: 1.6;
+    }
+
+    .offer-item strong {
+      display: block;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .faq-section {
+      padding: 84px 60px;
+      background: var(--dark-2);
+    }
+
+    .faq-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 22px 0;
+    }
+
+    .faq-item h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .faq-item p {
+      color: var(--gray);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .hover-hint {
+      background: #ffffff07;
+      border: 1px dashed #ffffff18;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 11px;
+      color: #ffffff80;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .trust-ribbon,
+      .premium-panel,
+      .fit-grid,
+      .offer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .premium-panel-section,
+      .fit-section,
+      .offer-stack-section,
+      .faq-section {
+        padding: 62px 22px;
+      }
+
+      .offer-stack {
+        padding: 28px 22px;
+      }
+    }
+
+  
+
+    /* Cleaner premium hero */
+    .clean-hero {
+      min-height: auto;
+      padding-top: 66px;
+      padding-bottom: 64px;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr);
+      gap: clamp(34px, 5vw, 70px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 18px;
+      color: #ffd2d6;
+      background: #E6394612;
+      border: 1px solid #E6394633;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 18px #E6394690;
+    }
+
+    .clean-hero h1 {
+      max-width: 760px;
+      margin-bottom: 18px;
+    }
+
+    .clean-hero .hero-sub {
+      max-width: 610px;
+      margin-bottom: 26px;
+      font-size: clamp(16px, 1.5vw, 19px);
+    }
+
+    .hero-proofline.compact {
+      max-width: 620px;
+      padding-top: 18px;
+      gap: 12px 18px;
+    }
+
+    .hero-proofline.compact .proof-pill {
+      background: #ffffff06;
+      border: 1px solid #ffffff10;
+      border-radius: 999px;
+      padding: 8px 11px;
+      color: #cbd3dc;
+    }
+
+    .clean-hero .mockup-topline {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .clean-hero .phone-mockup {
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 980px) {
+      .clean-hero {
+        grid-template-columns: 1fr;
+        padding-top: 42px;
+        padding-bottom: 46px;
+      }
+
+      .clean-hero h1 {
+        font-size: clamp(44px, 13vw, 64px);
+      }
+
+      .hero-proofline.compact {
+        border-top: none;
+        padding-top: 0;
+      }
+    }
+
+    /* Real-feel conversion upgrades */
+    .hero-urgency {
+      margin: -10px 0 24px;
+      color: #ffb3b8;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .mini-proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+      max-width: 620px;
+    }
+
+    .mini-proof-row span {
+      background: #ffffff06;
+      border: 1px solid #ffffff12;
+      color: #cbd3dc;
+      border-radius: 999px;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .scenario-section {
+      padding: 34px 60px 74px;
+      background: radial-gradient(circle at 50% 0%, #e6394612, transparent 42%);
+    }
+
+    .scenario-card {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 0.85fr;
+      gap: 30px;
+      align-items: center;
+      background: linear-gradient(180deg, #171d26 0%, #111720 100%);
+      border: 1px solid #ffffff12;
+      border-radius: 18px;
+      padding: 34px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.22);
+    }
+
+    .scenario-left h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.02;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+
+    .scenario-left p {
+      color: #cbd3dc;
+      line-height: 1.75;
+      font-size: 16px;
+      max-width: 590px;
+    }
+
+    .scenario-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .scenario-step {
+      background: #0d1117;
+      border: 1px solid #ffffff12;
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .scenario-step strong {
+      color: var(--red);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 1px;
+    }
+
+    .scenario-step span {
+      color: var(--light);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .fade-up.show { opacity: 1; transform: translateY(0); }
+
+    .phone-mockup.paused {
+      outline: 1px solid #e6394655;
+      outline-offset: 4px;
+    }
+
+    @media (max-width: 980px) {
+      .scenario-section { padding: 22px 22px 54px; }
+      .scenario-card { grid-template-columns: 1fr; padding: 24px 20px; }
+      .scenario-step { grid-template-columns: 1fr; gap: 4px; }
+    }
+
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "RoofPulse",
+    "url": "https://www.getroofpulse.com/",
+    "description": "Storm and after-hours missed-call recovery system for roofing companies.",
+    "areaServed": ["United States", "Memphis TN", "Collierville TN"],
+    "serviceType": "Roofing missed-call response and lead recovery",
+    "founder": { "@type": "Person", "name": "Hayden Keithley" }
+  }
+  </script>
 </head>
 <body>
-
-  <div class="alert-strip">
-    ⚠️ Missed call = lost job. Most homeowners call the next roofer immediately.
-  </div>
 
   <nav>
     <div class="nav-logo">ROOF<span>PULSE</span></div>
     <div class="nav-links">
-      <a href="#problem">Problem</a>
-      <a href="#how">How It Works</a>
+      <a href="#system">System</a>
+      <a href="#fit">Who It Helps</a>
       <a href="#demo">Demo</a>
-      <a href="#pilot" class="nav-cta">Try It Free</a>
+      <a href="#contact" class="nav-cta">Start Free</a>
     </div>
   </nav>
 
-  <section class="hero">
+  <section class="hero clean-hero" aria-label="RoofPulse hero section">
     <div class="hero-grid"></div>
 
     <div class="hero-left">
-      <div class="founder-badge">
-        <div class="founder-avatar">H</div>
-        <div class="founder-badge-text">
-          <strong>Hayden</strong> · Collierville, TN · Working directly with Memphis-area roofing companies
-        </div>
-      </div>
+      <div class="eyebrow">Built for roofers who miss urgent calls</div>
 
       <h1>
-        STOP LOSING<br>
-        ROOFING JOBS<br>
-        FROM <span class="accent">MISSED CALLS</span>
+        A STORM LEAD CALLS.<br>
+        YOU MISS IT.<br>
+        WE KEEP IT ALIVE.
       </h1>
 
       <p class="hero-sub">
-        When you’re on a roof or after hours, missed calls turn into lost jobs. RoofPulse instantly texts them back, follows up, and helps get the inspection booked — automatically.
+        RoofPulse responds to missed after-hours and storm calls in under 60 seconds, starts the conversation, follows up, and helps turn the caller into a booked inspection.
       </p>
 
-      <div class="hero-storm">
-        After a storm, call volume spikes fast — and most roofers miss 20–30% of those calls.
-      </div>
+      <div class="hero-urgency">Most homeowners do not wait. They call the next roofer.</div>
 
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Claim My Free Trial →</a>
-        <a href="#demo" class="btn-ghost">See What Missed Callers Get</a>
+        <a href="#contact" class="btn-primary demo-trigger">Recover My Missed Calls →</a>
+        <a href="#demo" class="btn-ghost demo-trigger">Watch A Missed Call Get Booked</a>
       </div>
 
-      <div class="hero-proofline">
-        <div class="proof-pill"><div class="proof-dot"></div>Free 14-day trial</div>
-        <div class="proof-pill"><div class="proof-dot"></div>No contracts</div>
-        <div class="proof-pill"><div class="proof-dot"></div>I set it up for you in 48 hours</div>
+      <div class="mini-proof-row">
+        <span>Under 60s response</span>
+        <span>After-hours follow-up</span>
+        <span>No new app for your crew</span>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="mockup-topline">This is what your missed calls are doing right now</div>
+      <div class="mockup-topline">Real scenario: 7:42 PM storm call</div>
 
-      <div class="phone-mockup">
+      <div class="phone-mockup" id="phoneMockup">
         <div class="phone-header">
           <div class="phone-avatar">🏠</div>
           <div>
-            <div class="phone-name">Homeowner — (901) 555-0142</div>
-            <div class="phone-sub">Called 47 seconds ago · went to voicemail</div>
+            <div class="phone-name">Homeowner — roof leak</div>
+            <div class="phone-sub">Missed at 7:42 PM · water coming in</div>
           </div>
           <div class="phone-status">
             <div class="status-dot"></div>
@@ -1263,22 +1799,35 @@
           </div>
         </div>
 
-      <div class="phone-body">
-  <div class="event-pill">
-    <div>📞</div>
-    <div><strong>Missed call detected</strong> — text sent back in 47 seconds</div>
-  </div>
-
-  <div class="message-area" id="messageArea"></div>
-
-  <a href="#demo" class="https://www.getroofpulse.com/#demo">
-    See It Book a Lead →
-            </a>
+        <div class="phone-body">
+          <div class="event-pill">
+            <div>📞</div>
+            <div><strong>Missed call detected</strong> — RoofPulse texted back in 47 seconds</div>
           </div>
+
+          <div class="message-area" id="messageArea"></div>
+
+          <button class="demo-hover-btn" id="finishHeroDemo" type="button">Hover / Tap To Watch It Book →</button>
+          <div class="hover-hint">The lead starts going cold here. Hover or tap to see the recovery flow finish.</div>
+
+          <div class="mockup-money">This is the moment a $5K–$15K job usually goes to the next roofer.</div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="mockup-money">One missed call can be a $3,000–$15,000 job going to the next roofer.</div>
+  <section class="scenario-section" aria-label="Missed call scenario">
+    <div class="scenario-card fade-up">
+      <div class="scenario-left">
+        <div class="section-label">The real problem</div>
+        <h2>It does not feel like a lost job. It feels like one missed call.</h2>
+        <p>A homeowner has water coming through the ceiling. They call you, hit voicemail, then call the next contractor. By the time you call back, they already booked someone else.</p>
+      </div>
+      <div class="scenario-timeline">
+        <div class="scenario-step"><strong>7:42 PM</strong><span>Storm lead calls after hours.</span></div>
+        <div class="scenario-step"><strong>7:43 PM</strong><span>RoofPulse texts back and asks what happened.</span></div>
+        <div class="scenario-step"><strong>7:46 PM</strong><span>The lead gives details and gets moved toward an inspection.</span></div>
+      </div>
     </div>
   </section>
 
@@ -1286,24 +1835,23 @@
   <section class="pilot-mini" id="pilot-mini">
     <div class="pilot-mini-card">
       <div class="pilot-mini-left">
-       <div class="pilot-mini-eyebrow">Limited Memphis Area Pilot</div>
-        <h2>TRY ROOFPULSE FREE FOR 14 DAYS</h2>
+       <div class="pilot-mini-eyebrow">Early Access Pilot</div>
+        <h2>START FREE UNTIL IT BOOKS A JOB</h2>
         <p class="pilot-mini-desc">
-          I’m looking for 1–2 local roofing companies to test RoofPulse in the real world.
-          I’ll set it up for you, your missed calls get worked automatically, and you see if it helps recover jobs.
+          Most “AI platforms” try to do everything. RoofPulse focuses on one expensive leak: urgent roofing calls that hit voicemail, go cold, and get booked by the next contractor.
         </p>
 
         <div class="pilot-mini-points">
           <div class="pilot-mini-point">Live in 48 hours</div>
           <div class="pilot-mini-point">No contract</div>
-          <div class="pilot-mini-point">$297/mo after trial</div>
+          <div class="pilot-mini-point">Keep it only if it proves value</div>
         </div>
       </div>
 
       <div class="pilot-mini-right">
-        <a href="#contact" class="btn-primary">Claim My Free Trial →</a>
+        <a href="#contact" class="btn-primary">Recover My Missed Calls →</a>
         <div class="pilot-mini-note">
-          No card required. Just a quick setup and a real test.
+          No card required. Based in Collierville, built to work for roofers anywhere.
         </div>
       </div>
     </div>
@@ -1311,19 +1859,106 @@
 
   <div class="pain-strip">
     <div class="pain-strip-inner">
-      <div class="pain-hit"><span>Missed Call</span></div>
+      <div class="pain-hit"><span>Storm Call</span></div>
       <div class="pain-hit">→</div>
-      <div class="pain-hit"><span>No Callback</span></div>
+      <div class="pain-hit"><span>Slow Response</span></div>
       <div class="pain-hit">→</div>
-      <div class="pain-hit"><span>Next Roofer Gets The Job</span></div>
+      <div class="pain-hit"><span>Competitor Books It</span></div>
     </div>
   </div>
 
+  <section class="premium-panel-section" id="premium-positioning">
+    <div class="premium-panel">
+      <div class="premium-card highlight">
+        <div class="section-label">The Positioning</div>
+        <h3>Not Another CRM.<br>A Missed-Revenue Recovery Layer.</h3>
+        <p>
+          RoofPulse sits on top of your current process and catches the jobs that normally die in voicemail: storm damage, active leaks, urgent repairs, and after-hours inspection requests.
+        </p>
+        <div class="premium-list">
+          <div class="premium-list-item"><span>✓</span><div>Does not replace your team, website, or CRM.</div></div>
+          <div class="premium-list-item"><span>✓</span><div>Does not ask roofers to learn a bloated platform.</div></div>
+          <div class="premium-list-item"><span>✓</span><div>Focuses on getting missed callers back into a real conversation.</div></div>
+        </div>
+      </div>
+      <div class="premium-card">
+        <div class="section-label">The Business Case</div>
+        <h3>If You Already Paid For The Lead, Don’t Let Voicemail Lose It.</h3>
+        <p>
+          Your Google listing, ads, referrals, and storm reputation are already creating inbound demand. RoofPulse protects that demand when nobody answers fast enough.
+        </p>
+        <div class="premium-list">
+          <div class="premium-list-item"><span>1</span><div><strong>Catch:</strong> detect the missed call and respond immediately.</div></div>
+          <div class="premium-list-item"><span>2</span><div><strong>Qualify:</strong> ask what happened, urgency, address, and timing.</div></div>
+          <div class="premium-list-item"><span>3</span><div><strong>Recover:</strong> follow up until the lead books or clearly opts out.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="recovery-stack" id="system">
+    <div class="recovery-stack-inner">
+      <div>
+        <div class="section-label">Why RoofPulse Is Different</div>
+        <h2 class="section-title">Not “AI For Everything.”<br>A Revenue Recovery Layer.</h2>
+        <p class="section-sub" style="margin-bottom:0;">
+          Big platforms try to do everything. RoofPulse focuses on the moment roofers lose money fastest: urgent storm and after-hours calls that never become booked inspections.
+        </p>
+      </div>
+
+      <div class="recovery-card-grid">
+        <div class="recovery-card">
+          <strong>1. Instant missed-call response</strong>
+          <p>Every missed storm or after-hours call gets a fast reply before the homeowner moves on.</p>
+        </div>
+        <div class="recovery-card">
+          <strong>2. Follow-up until they answer</strong>
+          <p>The system keeps the lead warm instead of letting one missed call disappear.</p>
+        </div>
+        <div class="recovery-card">
+          <strong>3. Simple booking push</strong>
+          <p>It asks for the issue, address, and timing so you can turn the conversation into an inspection.</p>
+        </div>
+        <div class="recovery-card">
+          <strong>4. Free setup pilot</strong>
+          <p>I set it up first. If it books real value, then you decide whether to keep it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fit-section" id="fit">
+    <div style="max-width:1100px;margin:0 auto 36px;">
+      <div class="section-label">Who This Is For</div>
+      <h2 class="section-title">Built For Roofers Who Can’t Afford Slow Follow-Up.</h2>
+      <p class="section-sub" style="margin-bottom:0;">
+        Keep the main business scalable, but use local trust while you launch. RoofPulse is for roofing companies anywhere that deal with urgent inbound calls and missed opportunities.
+      </p>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-card">
+        <div class="fit-icon">🌩️</div>
+        <h3>Storm-heavy markets</h3>
+        <p>When weather hits and phones spike, RoofPulse keeps urgent callers from slipping away.</p>
+      </div>
+      <div class="fit-card">
+        <div class="fit-icon">🌙</div>
+        <h3>After-hours callers</h3>
+        <p>Homeowners with leaks do not wait until morning. The system responds while your team is offline.</p>
+      </div>
+      <div class="fit-card">
+        <div class="fit-icon">📞</div>
+        <h3>Owner-led teams</h3>
+        <p>If the owner or office manager is already overloaded, RoofPulse handles the first response and follow-up.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="problem">
     <div class="section-label">Why This Matters</div>
-    <h2 class="section-title">Most Roofing Jobs Are Lost<br>Before You Even Know About Them</h2>
+    <h2 class="section-title">Storm & After-Hours Calls<br>Are The Ones You Cannot Miss</h2>
     <p class="section-sub">
-      If you don’t answer, most homeowners do not wait around. They call the next roofer. RoofPulse exists to stop that.
+      Homeowners with storm damage, leaks, or urgent repairs are high intent. If you miss them after hours, RoofPulse keeps the lead alive before they call the next company.
     </p>
 
     <div class="problem-grid">
@@ -1367,9 +2002,9 @@
 
   <section class="how-section" id="how">
     <div class="section-label">How It Works</div>
-    <h2 class="section-title">Four Steps<br>ZERO HEADACHES.</h2>
+    <h2 class="section-title">The Recovery System<br>Built For Roofers.</h2>
     <p class="section-sub">
-      No extra software for your team to learn. I set it up. Your missed calls start getting worked automatically.
+      Not a bloated CRM. A focused recovery layer that catches storm and after-hours opportunities your current process misses.
     </p>
 
     <div class="steps">
@@ -1377,7 +2012,7 @@
         <div class="step-num">1</div>
         <div class="step-title">Call Comes In</div>
         <div class="step-desc">
-          A homeowner calls. You’re on a roof, with a customer, or it’s after hours. The call goes unanswered.
+          A homeowner calls after hours or during a storm spike. You are busy, closed, or already on another job.
         </div>
       </div>
 
@@ -1385,7 +2020,7 @@
         <div class="step-num">2</div>
         <div class="step-title">Text Goes Out Fast</div>
         <div class="step-desc">
-          Within seconds, the missed caller gets a friendly text from your business number.
+          Within seconds, they get a direct reply from your business asking what happened and what they need.
         </div>
       </div>
 
@@ -1393,7 +2028,7 @@
         <div class="step-num">3</div>
         <div class="step-title">Conversation Keeps Moving</div>
         <div class="step-desc">
-          It asks what they need, handles the back-and-forth, and keeps the lead warm instead of letting them disappear.
+          The system gathers basic details, keeps the conversation moving, and follows up if they stop replying.
         </div>
       </div>
 
@@ -1401,7 +2036,7 @@
         <div class="step-num">4</div>
         <div class="step-title">You Get The Job</div>
         <div class="step-desc">
-          The lead is captured, the inspection gets booked, and you show up ready to close.
+          You get the lead details, the inspection is pushed toward booking, and the job does not die in voicemail.
         </div>
       </div>
     </div>
@@ -1411,7 +2046,7 @@
     <div class="stats-inner">
       <div class="stat-block">
         <div class="stat-num" id="stat-recovered">{{ recovered }}</div>
-        <div class="stat-label">Demo Leads Recovered</div>
+        <div class="stat-label">Demo Storm Leads Recovered</div>
         <div class="stat-note">increments with each simulation</div>
       </div>
       <div class="stat-block">
@@ -1429,9 +2064,9 @@
 
   <section class="demo-section" id="demo">
     <div class="section-label">See It In Action</div>
-    <h2 class="section-title">See Exactly What Your Missed Callers Get.</h2>
+    <h2 class="section-title">Watch A Storm Lead Get Recovered.</h2>
     <p class="section-sub">
-      Put in a name and number below and watch the kind of response a missed caller would get in real time.
+      Enter a sample caller and roofing issue to see the exact kind of after-hours recovery flow a homeowner would receive.
     </p>
 
     <div class="simulator">
@@ -1444,20 +2079,20 @@
 
       <div class="sim-body">
         <div class="sim-left">
-          <div class="sim-section-label">📞 Simulate A Missed Call</div>
+          <div class="sim-section-label">📞 Simulate A Storm / After-Hours Call</div>
           <div class="call-form">
-            <input class="form-input" id="sim-name" type="text" placeholder="Caller's name (e.g. Mike Johnson)">
+            <input class="form-input" id="sim-name" type="text" placeholder="Caller name (e.g. Mike Johnson)">
             <input class="form-input" id="sim-phone" type="text" placeholder="Their number (e.g. 901-555-0142)">
-            <input class="form-input" id="sim-issue" type="text" placeholder="Roofing issue (e.g. storm damage)">
-            <button class="sim-btn" onclick="runDemo()">Show Me What They'd Get →</button>
+            <input class="form-input" id="sim-issue" type="text" placeholder="Roofing issue (e.g. active leak from storm)">
+            <button class="sim-btn demo-trigger" onclick="runDemo()">Run The Recovery Demo →</button>
           </div>
 
           <div id="sim-result" style="display:none;margin-top:18px;">
             <div class="sim-result">⚡ Text sent in under 60 seconds</div>
             <div style="margin-top:12px;font-size:12px;color:var(--gray);line-height:1.8;">
-              ✓ Lead captured automatically<br>
-              ✓ Follow-up started immediately<br>
-              ✓ You do not have to chase them down later
+              ✓ Storm lead captured automatically<br>
+              ✓ Follow-up starts immediately<br>
+              ✓ You get a warmer inspection opportunity
             </div>
           </div>
         </div>
@@ -1472,32 +2107,52 @@
     </div>
   </section>
 
+  <section class="offer-stack-section" id="offer">
+    <div class="offer-stack">
+      <div class="section-label">The Pilot Offer</div>
+      <h2 class="section-title">I’ll Build The First Recovery Flow Free.</h2>
+      <p class="section-sub" style="margin-bottom:0;">
+        No “AI platform” pitch. No giant setup fee. We install the simplest version, test it on real missed calls, and only keep it if it helps create booked opportunities.
+      </p>
+      <div class="offer-grid">
+        <div class="offer-item"><strong>Included:</strong> missed-call instant response flow for storm/after-hours calls.</div>
+        <div class="offer-item"><strong>Included:</strong> follow-up sequence for leads that do not reply right away.</div>
+        <div class="offer-item"><strong>Included:</strong> simple lead capture so you know who responded and what they need.</div>
+        <div class="offer-item"><strong>Included:</strong> owner-friendly reporting: what came in, who replied, what could be booked.</div>
+      </div>
+      <div class="hero-actions" style="margin-bottom:0;">
+        <a href="#contact" class="btn-primary">Recover My Missed Calls →</a>
+        <a href="#demo" class="btn-ghost demo-trigger">Watch The Demo</a>
+      </div>
+    </div>
+  </section>
+
   <section class="pilot-section" id="pilot">
     <div class="pilot-card">
-      <div class="pilot-eyebrow">Limited Memphis Area Pilot</div>
-      <h2 class="pilot-title">TRY IT FREE FOR 14 DAYS</h2>
+      <div class="pilot-eyebrow">Early Access Pilot</div>
+      <h2 class="pilot-title">GET IT SET UP FREE</h2>
       <p class="pilot-desc">
-        I’m looking for one or two local roofing companies willing to test this in the real world. You get the system live and working. I get a real success story.
+        I’m looking for one or two local roofing companies willing to test this in the real world. I set it up, missed calls get worked, and we prove whether it helps book more inspections.
       </p>
 
       <div class="pilot-checklist">
-        <div class="pilot-check">Live in 48 hours — I handle setup</div>
-        <div class="pilot-check">Missed calls get texted back in under 60 seconds</div>
-        <div class="pilot-check">Built for local roofers handling storm volume</div>
-        <div class="pilot-check">No contracts, no card, no lock-in</div>
+        <div class="pilot-check">Live fast — I handle setup</div>
+        <div class="pilot-check">Storm and after-hours calls get a response fast</div>
+        <div class="pilot-check">Built for roofers handling storm and urgent repair volume</div>
+        <div class="pilot-check">No card, no lock-in, no bloated software</div>
       </div>
 
-      <a href="#contact" class="btn-primary">Claim My Free Trial →</a>
+      <a href="#contact" class="btn-primary">Recover My Missed Calls →</a>
 
       <p class="pilot-fine">
-        After trial: $297/month. No contract. Cancel anytime.
+        If it books a real opportunity, we keep it running month-to-month. No contract. Cancel anytime.
       </p>
     </div>
   </section>
 
   <section class="founder-section" id="founder">
     <div class="section-label">Who's Behind This</div>
-    <h2 class="section-title">Local. Hands-On.<br>Accountable.</h2>
+    <h2 class="section-title">Local. Focused.<br>Built To Prove Results.</h2>
 
     <div class="founder-grid">
       <div class="founder-card">
@@ -1505,7 +2160,7 @@
         <div class="founder-name">Hayden Keithley</div>
         <div class="founder-role">Founder · RoofPulse · Collierville, TN</div>
         <p class="founder-quote">
-          “I built RoofPulse for local roofing companies because missed calls are one of those problems nobody notices until jobs start slipping away. I’m local, I do the setup myself, and I’m focused on proving this works one roofer at a time.”
+          “I built RoofPulse for local roofing companies because storm and after-hours calls are one of those problems nobody notices until jobs start going to whoever answered first. I’m local, I do the setup myself, and I’m focused on proving this works one roofer at a time.”
         </p>
       </div>
 
@@ -1535,7 +2190,7 @@
           <div>
             <div class="detail-title">Built To Prove Results</div>
             <div class="detail-desc">
-              This early trial is about one thing: showing that missed calls can turn into real booked inspections.
+              This early pilot is about one thing: proving storm and after-hours calls can turn into real booked inspections.
             </div>
           </div>
         </div>
@@ -1553,13 +2208,36 @@
     </div>
   </section>
 
+  <section class="faq-section" id="faq">
+    <div class="faq-wrap">
+      <div class="section-label">Questions Roofers Ask</div>
+      <h2 class="section-title">Simple Answers. No Software Weirdness.</h2>
+      <div class="faq-item">
+        <h3>Do I need to replace my current phone system or CRM?</h3>
+        <p>No. RoofPulse is positioned as a recovery layer. The first version can be kept simple and built around your current number, scripts, and process.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is this only for Memphis roofers?</h3>
+        <p>No. RoofPulse is based in Collierville and starting with local proof, but the system is built for roofing companies anywhere that miss urgent calls.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What makes this different from an all-in-one AI platform?</h3>
+        <p>All-in-one platforms sell more features. RoofPulse focuses on one outcome: recovering urgent missed calls and moving them toward booked inspections.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What happens after the free setup?</h3>
+        <p>If it creates real value, we keep it running month-to-month. If it does not help, you should not keep paying for it.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="contact-section" id="contact">
     <div class="contact-grid">
       <div>
         <div class="section-label">Get In Touch</div>
         <h2 class="section-title" style="font-size:46px;">Let's Talk.</h2>
         <p style="font-size:16px;color:var(--gray);line-height:1.75;margin-bottom:28px;">
-          Fill this out and I’ll reach out personally. No sales team. No weird software pitch. Just a quick conversation about whether this would help you stop losing jobs from missed calls.
+          Fill this out and I’ll reach out personally. No sales team. No weird software pitch. Just a quick conversation about whether this would help you recover storm and after-hours jobs you are currently missing.
         </p>
 
         <div style="display:flex;flex-direction:column;gap:16px;">
@@ -1567,7 +2245,7 @@
             <div class="detail-icon">📍</div>
             <div>
               <div class="detail-title">Collierville, TN</div>
-              <div class="detail-desc">Serving Memphis metro roofing companies</div>
+              <div class="detail-desc">Built locally. Designed for roofing companies anywhere.</div>
             </div>
           </div>
 
@@ -1582,7 +2260,7 @@
           <div class="founder-detail">
             <div class="detail-icon">🎯</div>
             <div>
-              <div class="detail-title">14-Day Free Trial</div>
+              <div class="detail-title">Free Setup Pilot</div>
               <div class="detail-desc">No card required. No commitment.</div>
             </div>
           </div>
@@ -1605,11 +2283,11 @@
           </div>
 
           <button type="submit" class="btn-primary" style="width:100%;font-size:15px;padding:16px;">
-            Claim My Free Trial →
+            Recover My Missed Calls →
           </button>
 
           <p style="font-size:11px;color:var(--gray);text-align:center;margin-top:8px;">
-            Response within 2 hours (10am–5pm CDT, Mon–Fri)
+            I’ll respond personally. No spam. No sales team.
           </p>
         </form>
       </div>
@@ -1626,7 +2304,7 @@
 
     <div style="text-align:right;line-height:1.4;">
       <div class="footer-text">
-        © <span id="yr"></span> RoofPulse · Collierville, TN · Built for local roofers
+        © <span id="yr"></span> RoofPulse · Built in Collierville, TN · Storm call recovery for roofers
       </div>
       <div style="font-size:11px;color:#ffffff20;">
         v0.2.0 · Early access · {{ days_live }} days live
@@ -1634,21 +2312,34 @@
     </div>
   </footer>
 
-  <a href="#contact" class="sticky-cta">Stop Missing Jobs — Try It Free</a>
+  <a href="#contact" class="sticky-cta">Recover Storm Calls — Start Free</a>
 
  <script>
   document.getElementById('yr').textContent = new Date().getFullYear();
 
   const messages = [
-    { text: "Hey, this is Smith Roofing Co — saw we missed your call. How can we help?", type: "bot" },
-    { text: "I need a roof repair estimate.", type: "user" },
-    { text: "Absolutely. What’s the property address?", type: "bot" },
+    { text: "Hey — this is Smith Roofing. Sorry we missed you. Are you dealing with storm damage or an active leak?", type: "bot" },
+    { text: "Active leak. Water is coming through the kitchen ceiling.", type: "user" },
+    { text: "I’m sorry you’re dealing with that. What’s the property address so we can get you on the inspection list?", type: "bot" },
     { text: "123 Oak Ridge Dr.", type: "user" },
-    { text: "Perfect — we’ll get you booked with the next available roofing specialist.", type: "bot" }
+    { text: "Got it. We can have someone check it tomorrow morning. Would 10:00 AM work?", type: "bot" },
+    { text: "Yes please.", type: "user" },
+    { text: "You’re booked for 10:00 AM. If anything changes before then, reply here and we’ll help. ✅", type: "bot" }
   ];
 
   let currentIndex = 0;
-  let paused = false;
+  let pausedForHover = false;
+  let hasPausedOnce = false;
+  let sequenceTimer = null;
+
+  function shakePhone() {
+    const mockup = document.getElementById("phoneMockup");
+    if (!mockup) return;
+    mockup.classList.remove("shake");
+    void mockup.offsetWidth;
+    mockup.classList.add("shake");
+    setTimeout(() => mockup.classList.remove("shake"), 450);
+  }
 
   function addMessage(message) {
     const messageArea = document.getElementById("messageArea");
@@ -1658,72 +2349,74 @@
     bubble.className = `msg ${message.type}`;
     bubble.textContent = message.text;
     messageArea.appendChild(bubble);
-
     messageArea.scrollTop = messageArea.scrollHeight;
   }
 
+  function showTypingPause() {
+    const messageArea = document.getElementById("messageArea");
+    const mockup = document.getElementById("phoneMockup");
+    if (!messageArea || document.getElementById("typingIndicator")) return;
+
+    const typing = document.createElement("div");
+    typing.className = "typing";
+    typing.id = "typingIndicator";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+    messageArea.appendChild(typing);
+    messageArea.scrollTop = messageArea.scrollHeight;
+    if (mockup) {
+      mockup.classList.add("paused");
+      // If the cursor is already over the phone when the pause happens,
+      // mouseenter will not fire again, so resume automatically.
+      if (mockup.matches(":hover")) {
+        setTimeout(resumeMessages, 250);
+      }
+    }
+  }
+
   function playSequence() {
+    clearTimeout(sequenceTimer);
     if (currentIndex >= messages.length) return;
 
-    // pause halfway + typing indicator
-    if (currentIndex === 2 && !paused) {
-      paused = true;
-
-      const messageArea = document.getElementById("messageArea");
-
-      const typing = document.createElement("div");
-      typing.className = "typing";
-      typing.id = "typingIndicator";
-      typing.innerHTML = "<span></span><span></span><span></span>";
-
-      messageArea.appendChild(typing);
-      messageArea.scrollTop = messageArea.scrollHeight;
-
+    // Pause after the homeowner replies. Hover/tap resumes the booking flow.
+    if (currentIndex === 2 && !hasPausedOnce) {
+      pausedForHover = true;
+      hasPausedOnce = true;
+      showTypingPause();
       return;
     }
 
-    // small shake on first message
-    if (currentIndex === 0) {
-      const mockup = document.getElementById("phoneMockup");
-      if (mockup) {
-        mockup.classList.add("shake");
-        setTimeout(() => mockup.classList.remove("shake"), 400);
-      }
-    }
-
+    if (currentIndex === 0) shakePhone();
     addMessage(messages[currentIndex]);
     currentIndex++;
-
-    setTimeout(playSequence, 900);
+    sequenceTimer = setTimeout(playSequence, 1050);
   }
 
   function startMessages() {
     const messageArea = document.getElementById("messageArea");
     const mockup = document.getElementById("phoneMockup");
-
     if (!messageArea) return;
 
+    clearTimeout(sequenceTimer);
     messageArea.innerHTML = "";
     currentIndex = 0;
-    paused = false;
+    pausedForHover = false;
+    hasPausedOnce = false;
+    if (mockup) mockup.classList.remove("paused");
 
-    // initial shake (missed call moment)
-    if (mockup) {
-      mockup.classList.add("shake");
-      setTimeout(() => mockup.classList.remove("shake"), 400);
-    }
-
-    playSequence();
+    shakePhone();
+    setTimeout(playSequence, 350);
   }
 
   function resumeMessages() {
-    if (!paused) return;
-
-    paused = false;
+    if (!pausedForHover) return;
+    pausedForHover = false;
 
     const typing = document.getElementById("typingIndicator");
+    const mockup = document.getElementById("phoneMockup");
     if (typing) typing.remove();
+    if (mockup) mockup.classList.remove("paused");
 
+    shakePhone();
     playSequence();
   }
 
@@ -1731,8 +2424,34 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     const mockup = document.getElementById("phoneMockup");
+    const finishBtn = document.getElementById("finishHeroDemo");
     if (mockup) {
-      mockup.addEventListener("mouseenter", resumeMessages);
+      ["mouseenter", "mouseover", "mousemove", "pointerenter", "pointerover", "pointermove", "click"].forEach(evt => {
+        mockup.addEventListener(evt, resumeMessages);
+      });
+      mockup.addEventListener("touchstart", resumeMessages, { passive: true });
+    }
+    if (finishBtn) {
+      finishBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        resumeMessages();
+      });
+    }
+
+    const stickyBtn = document.querySelector(".sticky-cta");
+    const hideNearButtons = document.querySelectorAll(
+      ".btn-primary, .btn-ghost, .demo-trigger, .sim-btn"
+    );
+
+    if (stickyBtn && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        const shouldHide = entries.some(entry => entry.isIntersecting);
+        stickyBtn.classList.toggle("hide-sticky", shouldHide);
+      }, { threshold: 0.35, rootMargin: "0px 0px -8% 0px" });
+
+      hideNearButtons.forEach(btn => {
+        if (btn !== stickyBtn) observer.observe(btn);
+      });
     }
   });
 
@@ -1740,29 +2459,29 @@
   function runDemo() {
     const name  = document.getElementById('sim-name').value  || 'Mike Johnson';
     const phone = document.getElementById('sim-phone').value || '(901) 555-0142';
-    const issue = document.getElementById('sim-issue').value || 'storm damage';
+    const issue = document.getElementById('sim-issue').value || 'active leak from storm damage';
     const first = name.split(' ')[0];
     const thread = document.getElementById('sim-thread');
     const result = document.getElementById('sim-result');
 
-    thread.innerHTML = `<p style="font-size:13px;color:var(--gray)">⚡ Missed call detected from ${phone}...</p>`;
+    thread.innerHTML = `<p style="font-size:13px;color:var(--gray)">📞 Missed storm call detected from ${phone} at 7:42 PM...</p>`;
     result.style.display = 'none';
 
     const msgs = [
       {
         dir:'out',
         label:'RoofPulse sent automatically (47s later)',
-        text:`Hey ${first}! Sorry we missed your call — this is Smith Roofing Co. Are you dealing with ${issue}? We can usually get someone out quickly for a free inspection. Just reply here and we’ll get you taken care of.`
+        text:`Hey ${first} — this is Smith Roofing. Sorry we missed you. Are you dealing with ${issue}? Reply here and we’ll help get you on the inspection list.`
       },
       {
         dir:'in',
         label:`${name} replied`,
-        text:'Yes, I need someone to look at my roof. Can you come Thursday?'
+        text:'Yes. Water came in after the storm. Can someone look at it tomorrow?'
       },
       {
         dir:'out',
         label:'RoofPulse replied automatically',
-        text:`Thursday works great, ${first}. I can have someone there at 10am for a free inspection. Does that work for you?`
+        text:`Yes — I can put you down for tomorrow at 10:00 AM for a free inspection. Does that work?`
       },
       {
         dir:'in',
@@ -1772,7 +2491,7 @@
       {
         dir:'out',
         label:'RoofPulse confirmed & logged',
-        text:`Awesome — you’re all set for Thursday at 10am. We’ll see you then. ✅`
+        text:`Awesome — you’re booked for tomorrow at 10:00 AM. We’ll see you then. ✅`
       }
     ];
 
@@ -1795,11 +2514,25 @@
           if (i === 0) {
             result.style.display = 'block';
             const statEl = document.getElementById('stat-recovered');
-            if (statEl) statEl.textContent = parseInt(statEl.textContent || 0) + 1;
+            if (statEl) statEl.textContent = (parseInt(statEl.textContent, 10) || 0) + 1;
           }
         }, i * 950);
       });
     }, 700);
+  }
+
+
+  // Premium scroll reveal
+  const revealEls = document.querySelectorAll('.fade-up');
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, { threshold: 0.16 });
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('show'));
   }
 
   // ===== KEEP YOUR CONTACT FORM =====
