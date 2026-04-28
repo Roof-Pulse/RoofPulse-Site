@@ -4,100 +4,219 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RoofPulse — You're In</title>
+
   <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
-  <link rel="apple-touch-icon" href="/static/favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Barlow', sans-serif;
-      background: #0D1117; color: #fff;
+      background: #0D1117;
+      color: #fff;
       min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 40px 24px; text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
     }
-    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 4px; margin-bottom: 48px; }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 4px;
+      margin-bottom: 40px;
+    }
+
     .logo span { color: #E63946; }
+
     .check {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: #16803420; border: 2px solid #16803460;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px; margin: 0 auto 28px;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #16803420;
+      border: 2px solid #16803460;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin-bottom: 24px;
     }
-    h1 { font-family: 'Bebas Neue', sans-serif; font-size: 52px; margin-bottom: 12px; }
-    .sub { font-size: 17px; color: #8B949E; max-width: 460px; line-height: 1.7; margin-bottom: 40px; }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 52px;
+      margin-bottom: 10px;
+    }
+
+    .sub {
+      font-size: 16px;
+      color: #8B949E;
+      max-width: 460px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
     .card {
-      background: #161B22; border: 1px solid #ffffff10;
-      border-radius: 12px; padding: 36px 40px;
-      max-width: 460px; text-align: left; margin-bottom: 36px;
+      background: #161B22;
+      border: 1px solid #ffffff10;
+      border-radius: 12px;
+      padding: 32px 36px;
+      max-width: 480px;
+      text-align: left;
+      margin-bottom: 32px;
       position: relative;
     }
+
     .card::before {
-      content: ''; position: absolute;
-      top: 0; left: 0; right: 0; height: 2px;
-      background: #E63946; border-radius: 2px 2px 0 0;
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: #E63946;
     }
+
     .card-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: #8B949E; margin-bottom: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #8B949E;
+      margin-bottom: 18px;
     }
-    .step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 18px; }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
     .step:last-child { margin-bottom: 0; }
+
     .step-num {
-      background: #E63946; color: #fff;
-      width: 30px; height: 30px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; flex-shrink: 0; margin-top: 2px;
+      background: #E63946;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 3px;
     }
-    .step-title { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
-    .step-desc { font-size: 13px; color: #8B949E; line-height: 1.55; }
-    .back { color: #E63946; text-decoration: none; font-size: 14px; font-weight: 600; }
+
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: #8B949E;
+      line-height: 1.5;
+    }
+
+    .highlight {
+      margin-top: 24px;
+      font-size: 13px;
+      color: #E63946;
+      font-weight: 600;
+    }
+
+    .back {
+      color: #E63946;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
     .back:hover { text-decoration: underline; }
-    .fine { font-size: 12px; color: #ffffff25; margin-top: 20px; }
+
+    .fine {
+      font-size: 12px;
+      color: #ffffff25;
+      margin-top: 18px;
+    }
   </style>
 </head>
+
 <body>
+
   <div class="logo">ROOF<span>PULSE</span></div>
 
-  <div class="check">✅</div>
-  <h1>You're Confirmed.</h1>
-  <p class="sub">Got your info — I'll reach out personally within a few hours. No sales team, just me.</p>
+  <div class="check">✓</div>
+
+<h1>You're In.</h1>
+
+<p class="sub">
+  Got your info — I’ll reach out personally today to get this set up.
+
+  If you submitted this after hours, expect to hear from me the next morning.
+
+  You’ll be working directly with me — no sales reps, no handoffs.
+</p>
 
   <div class="card">
     <div class="card-label">What Happens Next</div>
+
     <div class="step">
       <div class="step-num">1</div>
       <div>
-        <div class="step-title">I reach out personally</div>
-        <div class="step-desc">Expect a call or text within 2–4 hours. I'll confirm your details and answer any questions you have.</div>
+        <div class="step-title">I reach out directly</div>
+        <div class="step-desc">
+          You’ll get a quick call or text from me to confirm a few details and make sure this fits your setup.
+        </div>
       </div>
     </div>
+
     <div class="step">
       <div class="step-num">2</div>
       <div>
-        <div class="step-title">Quick setup call</div>
-        <div class="step-desc">About 30 minutes. I configure everything around your business — your number, your script, your process. You don't touch any software.</div>
+        <div class="step-title">We set it up around your business</div>
+        <div class="step-desc">
+          About 20–30 minutes. I configure everything — your number, your responses, your workflow.
+          You don’t touch any software.
+        </div>
       </div>
     </div>
+
     <div class="step">
       <div class="step-num">3</div>
       <div>
-        <div class="step-title">Live within 48 hours</div>
-        <div class="step-desc">Your missed call text back and follow-up system goes live. Every missed call starts getting recovered automatically.</div>
+        <div class="step-title">It goes live within 48 hours</div>
+        <div class="step-desc">
+          Every missed call starts getting an instant response and follow-up automatically.
+        </div>
       </div>
     </div>
+
     <div class="step">
       <div class="step-num">4</div>
       <div>
-        <div class="step-title">Day 14 — we review together</div>
-        <div class="step-desc">I'll show you exactly what the system recovered. You decide if it's worth continuing. No pressure either way.</div>
+        <div class="step-title">You see what it actually captures</div>
+        <div class="step-desc">
+          After it runs, we look at what came in — calls recovered, conversations started, jobs booked.
+          Then you decide if it’s worth keeping.
+        </div>
       </div>
+    </div>
+
+    <div class="highlight">
+      Most roofers don’t realize how many jobs they’re losing until this is running.
     </div>
   </div>
 
   <a href="/" class="back">← Back to RoofPulse</a>
-  <p class="fine">14-day free pilot · no card · no commitment · cancel anytime</p>
+
+  <p class="fine">
+    Free setup · no contract · continue only if it works
+  </p>
+
 </body>
 </html>
