@@ -577,12 +577,12 @@
     const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('show')})},{threshold:.14});
     document.querySelectorAll('.fade-up').forEach(el=>revealObserver.observe(el));
 
-    const heroMessages=[
-      {text:"Hey, this is Smith Roofing — sorry we missed your call. Are you dealing with a roof leak or storm damage?",type:"bot"},
-      {text:"Storm damage. Water is coming in near the garage.",type:"user"},
-      {text:"Got it. What's the property address? We can usually get someone out quickly for an inspection.",type:"bot"},
-      {text:"123 Oak Ridge Dr.",type:"user"},
-      {text:"Perfect — we'll have someone reach out to confirm the next available inspection window. You're not lost in voicemail anymore.",type:"bot"}
+  const heroMessages=[
+  {text:"Hey, this is Smith Roofing — sorry we missed your call. Are you dealing with a roof leak or storm damage?",type:"bot"},
+  {text:"Storm damage. Water is coming in near the garage.",type:"user"},
+  {text:"Got it. We can usually get someone out pretty quickly. Does tomorrow morning or afternoon work better for you?",type:"bot"},
+  {text:"Tomorrow afternoon would be better.",type:"user"},
+  {text:"Perfect — I’ve got you down for a roof inspection tomorrow at 2:00 PM. If anything changes, just reply here.",type:"bot"}
     ];
     let loopTimer=null,typingTimer=null,restartTimer=null,heroVisible=false,paused=false,hasHovered=false,currentNext=null;
     function clearHeroTimers(){clearTimeout(loopTimer);clearTimeout(typingTimer);clearTimeout(restartTimer)}
@@ -607,19 +607,19 @@
       const btn=document.getElementById('runDemoBtn');
       thread.innerHTML=`<p style="font-size:13px;color:var(--gray);line-height:1.7;">📞 Missed call detected from ${phone}...</p>`;
       result.style.display='none';btn.textContent='Sending Demo Text...';btn.disabled=true;
-      const msgs=storm?[
-        {dir:'out',label:'Storm-aware response',text:`Hey ${first} — saw the storm hit your area. This is Smith Roofing. We're booking storm damage inspections now. Are you dealing with missing shingles, leaks, or possible hail damage?`},
-        {dir:'in',label:`${name} replied`,text:'Yes — shingles came off and there\'s a leak near the garage.'},
-        {dir:'out',label:'Urgent storm follow-up',text:'Got it. We\'re prioritizing storm inspections right now. What\'s the property address so we can get you on the schedule?'},
-        {dir:'in',label:`${name} replied`,text:'123 Oak Ridge Dr.'},
-        {dir:'out',label:'Inspection secured',text:'Perfect — we\'ll have someone reach out ASAP to confirm your inspection window. You\'re not stuck in voicemail anymore.'}
-      ]:[
-        {dir:'out',label:'Missed-call response',text:`Hey ${first}, sorry we missed your call — this is Smith Roofing. Are you dealing with ${issue}? Reply here and we'll get you taken care of.`},
-        {dir:'in',label:`${name} replied`,text:'Yes, I need someone to look at it. Can you come out this week?'},
-        {dir:'out',label:'Follow-up kept the lead moving',text:'Absolutely. What\'s the property address? We can check the next available inspection window for you.'},
-        {dir:'in',label:`${name} replied`,text:'123 Oak Ridge Dr.'},
-        {dir:'out',label:'Lead captured for the roofer',text:'Perfect — we\'ll have someone reach out to confirm the inspection. You\'re all set.'}
-      ];
+    const msgs=storm?[
+      {dir:'out',label:'Storm-aware response',text:`Hey ${first} — saw the storm hit your area. This is Smith Roofing. We're booking storm inspections now. Are you dealing with missing shingles, leaks, or hail damage?`},
+      {dir:'in',label:`${name} replied`,text:"Yes — shingles came off and there's a leak near the garage."},
+      {dir:'out',label:'Storm follow-up',text:"Got it. We're prioritizing storm inspections today. Does tomorrow morning or afternoon work better for you?"},
+      {dir:'in',label:`${name} replied`,text:'Tomorrow morning works.'},
+      {dir:'out',label:'Inspection booked',text:"Perfect — I've got you scheduled for a storm inspection tomorrow between 9–11 AM. If anything changes, just reply here."}
+    ]:[
+      {dir:'out',label:'Missed-call response',text:`Hey ${first}, sorry we missed your call — this is Smith Roofing. Are you dealing with ${issue}?`},
+      {dir:'in',label:`${name} replied`,text:'Yeah, I need someone to come look at it.'},
+      {dir:'out',label:'Lead follow-up',text:'Absolutely. We can usually get someone out quickly. Does tomorrow morning or afternoon work better for you?'},
+      {dir:'in',label:`${name} replied`,text:'Tomorrow afternoon would probably work best.'},
+      {dir:'out',label:'Inspection booked',text:"Perfect — I've got you down for a roof inspection tomorrow at 2:00 PM. If anything changes, just reply here."}
+    ];
       setTimeout(()=>{
         thread.innerHTML='';
         msgs.forEach((m,i)=>{
