@@ -54,6 +54,13 @@
     .nav-cta:hover{background:var(--red-dark)}
 
     /* HERO */
+    .flow-arrow{
+  font-size:1.6em;
+  font-weight:900;
+  color:#E63946;
+  margin:0 12px;
+  vertical-align:middle;
+}
     .hero{max-width:1240px;margin:0 auto;padding:82px 60px 68px;display:grid;grid-template-columns:1.02fr .98fr;gap:70px;align-items:center;min-height:calc(100vh - 74px)}
     .eyebrow{display:inline-flex;align-items:center;gap:9px;color:#ffd7db;background:#E6394612;border:1px solid #E6394634;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:22px}
     .eyebrow:before{content:'';width:7px;height:7px;background:var(--red);border-radius:50%;box-shadow:0 0 18px rgba(230,57,70,.9)}
@@ -143,9 +150,24 @@
     .comparison-list{list-style:none}
     .comparison-list li{min-height:62px;padding:16px 20px;border-bottom:1px solid var(--border);color:#d3d9e0;font-size:15px;line-height:1.45;display:flex;align-items:center;gap:10px}
     .comparison-list li:last-child{border-bottom:0}
-    .comparison-list li:before{font-weight:900;flex-shrink:0}
-    .comparison-card:not(.good) li:before{content:'×';color:#ff727c}
-    .comparison-card.good li:before{content:'✓';color:var(--green)}
+  .comparison-list li:before{
+  font-size:1.25em;
+  font-weight:900;
+  flex-shrink:0;
+  display:inline-block;
+  min-width:24px;
+  line-height:1;
+}
+
+.comparison-card:not(.good) li:before{
+  content:'×';
+  color:#ff727c;
+}
+
+.comparison-card.good li:before{
+  content:'✓';
+  color:var(--green);
+}
 
     /* DEMO */
     .demo-section{max-width:1120px}
@@ -309,13 +331,21 @@
     <h2 class="accent">You're Letting Jobs Walk.</h2>
     <p>Roofing leads are impatient — roof problems feel urgent. If they hit voicemail and don't hear back fast, they move on. RoofPulse System™ keeps that lead alive before the next contractor gets it.</p>
   </section>
-  <div class="divider-strip"><span><strong>Missed Call</strong> → No Fast Response → <strong>Next Roofer Wins</strong></span></div>
+  <div class="divider-strip">
+  <span>
+    <strong>Missed Call</strong>
+    <span class="flow-arrow">→</span>
+    Slow Callback
+    <span class="flow-arrow">→</span>
+    <strong>Competitor Books It</strong>
+  </span>
+</div>
 
   <!-- WHY -->
   <section class="section" id="why">
     <div class="section-centered fade-up">
       <div class="section-label">Why This Actually Works</div>
-      <h2 class="section-title">It Fixes the Exact Moment Jobs Are Lost.</h2>
+      <h2 class="section-title">It Talks to Leads When You Can’t.</h2>
       <p class="section-sub">RoofPulse System™ is a done-for-you missed call response system. I set it up around your roofing business and it runs in the background while you handle the work.</p>
     </div>
     <div class="cards-grid">
@@ -473,7 +503,7 @@
         <div class="price"><span>$</span>197<span>/mo</span></div>
         <div class="price-note">After your free 14-day trial · cancel anytime · no contracts</div>
       </div>
-      <div class="offer-guarantee">One recovered job pays for months of service.</div>
+      <div class="offer-guarantee">One recovered roofing job could pay for GetRoofPulse for the next year.</div>
       <br><br>
       <a href="#contact" class="btn-primary cta-watch">Get Set Up Free →</a>
     </div>
